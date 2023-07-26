@@ -5,10 +5,11 @@ This add-on allows you to create lists with the class "shuffle", which, combined
 1. Install the add-on from [AnkiWeb](https://ankiweb.net/shared/info/xxxxxx)
 2. In the main Anki window, go to **Tools → Manage Note Types** and find the note type where you want to enable list randomization (for example, Cloze). Proceed by clicking on **Cards** to invoke the card template editor.  Now apply the following changes:  - Wrap the content of the Front Template field with `<span id="front">CONTENTS HERE</span>`.
 3. Copy and paste the content of [`template.html`](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/main/template.html) into the front and back template of your cards.
-   
-### Here is how the results should look, for example, for the Cloze grade type:
 
-**Front Template**:
+   
+**Here is how the results should look, for example, for the Cloze grade type:**
+
+**Front Template**
 
 ```html
 <span id="front">
@@ -50,7 +51,7 @@ run();
 
 ```
 
-**Back Template**:
+**Back Template**
 
 ```html
 {{cloze:Text}}<br>
