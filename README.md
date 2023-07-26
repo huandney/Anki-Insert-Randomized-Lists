@@ -119,4 +119,4 @@ If you are still having problems, please contact the author of the add-on.
 
 ## Compatibility
 * The randomization [script](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/main/template.html) was tested on AnkiDroid, Ankiewb and AnkiDesktop.
-* The Addon has been tested and works apparently on all versions of anki since 2.1.15.
+* The add-on has been tested and works apparently on all versions of anki since 2.1.15.
