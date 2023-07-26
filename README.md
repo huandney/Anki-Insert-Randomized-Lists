@@ -108,6 +108,23 @@ On Anki 2.1:
 
 The default hotkey is `Alt+Shift+L`.
 
+### Optional
+If you want to differentiate, only in the Editor, the random lists from the regular lists we can use the excellent [add-on](https://forums.ankiweb.net/t/css-injector-official-support/18800) made by [@kleinerpirat](https://github.com/kleinerpirat). For example:
+
+![Captura de tela de 2023-07-26 19-23-22](https://github.com/huandney/Anki-Insert-Randomized-Lists/assets/19948348/1facd2a6-a565-4124-bc45-eaf105a2124a)
+
+
+1. navigate to the add-on folder (Tools → Add-ons → CSS Injector - Change default editor styles → click "View Files")
+2. Add the code below or another style of your choice in `field.css` inside `user_files`.
+ ```css
+ul.shuffle {
+    border: 2px dotted gray;
+}
+```
+3. restart the editor.
+
+* This style will not appear when reviewing your cards.
+
 ## Troubleshooting
 
 If you are having problems with the add-on, please check the following:
