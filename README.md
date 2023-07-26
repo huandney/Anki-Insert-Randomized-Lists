@@ -1,2 +1,120 @@
-# Anki-Insert-Randomized-Lists
-An Anki add-on that inserts an unordered list with the 'shuffle' CSS class for creating randomized lists. Originally developed by Glutanimate, this version has been reformulated and updated for recent Anki versions.
+# Add-on - Anki - Insert Randomized Lists
+This add-on allows you to create lists with the class "shuffle", which, combined with the script below, serves to randomize these lists.  . Originally developed by Glutanimate, this version has been reformulated and updated for recent Anki versions.
+
+## Installation  
+1. Install the add-on from [AnkiWeb](https://ankiweb.net/shared/info/xxxxxx). 
+2. In the main Anki window, go to **Tools → Manage Note Types** and find the note type where you want to enable list randomization (for example, Cloze). Proceed by clicking on **Cards** to invoke the card template editor.  Now apply the following changes:  - Wrap the content of the Front Template field with `<div id="front">CONTENTS HERE</div>`. For example, for the cloze template:  ```html <div id="front"> {{cloze:Text}} </div>``
+
+- Copy and paste the content of `template.html` at the end of both the Front Template and Back Template of your cards.
+
+Here is how the results should look for the Cloze note type:
+
+**Front Template**:
+
+```html
+<span id="front">
+{{cloze:Text}}
+</span>
+
+<script>
+function run() {
+    var ulElements = document.querySelectorAll('ul.shuffle');
+    var isFront = document.getElementById("front");
+
+    for (var i = 0; i < ulElements.length; i++) {
+        var ul = ulElements[i];
+        var children = Array.from(ul.children);
+        var indices;
+
+        if (isFront) {
+            // Quando a frente do cartão é exibida, randomize e armazene a ordem
+            indices = Array.from({length: children.length}, (_, i) => i);
+            for (var j = indices.length - 1; j > 0; j--) {
+                var k = Math.floor(Math.random() * (j + 1));
+                [indices[j], indices[k]] = [indices[k], indices[j]];  // Swap elements.
+            }
+            sessionStorage.setItem('indices' + i, JSON.stringify(indices));
+        } else {
+            // Quando a resposta é exibida, recupere a ordem armazenada
+            indices = JSON.parse(sessionStorage.getItem('indices' + i));
+        }
+
+        // Reordene os elementos com base em indices
+        indices.forEach(function(index) {
+            ul.appendChild(children[index]);
+        });
+    }
+}
+
+run();
+</script>
+
+```
+
+**Back Template**:
+
+```html
+{{cloze:Text}}<br>
+{{Extra}}
+
+<script>
+function run() {
+    var ulElements = document.querySelectorAll('ul.shuffle');
+    var isFront = document.getElementById("front");
+
+    for (var i = 0; i < ulElements.length; i++) {
+        var ul = ulElements[i];
+        var children = Array.from(ul.children);
+        var indices;
+
+        if (isFront) {
+            // Quando a frente do cartão é exibida, randomize e armazene a ordem
+            indices = Array.from({length: children.length}, (_, i) => i);
+            for (var j = indices.length - 1; j > 0; j--) {
+                var k = Math.floor(Math.random() * (j + 1));
+                [indices[j], indices[k]] = [indices[k], indices[j]];  // Swap elements.
+            }
+            sessionStorage.setItem('indices' + i, JSON.stringify(indices));
+        } else {
+            // Quando a resposta é exibida, recupere a ordem armazenada
+            indices = JSON.parse(sessionStorage.getItem('indices' + i));
+        }
+
+        // Reordene os elementos com base em indices
+        indices.forEach(function(index) {
+            ul.appendChild(children[index]);
+        });
+    }
+}
+
+run();
+</script>
+```
+
+### Note
+
+The above JS script may change over time (as a result of updates, etc.). Make sure to always use the code in `template.html` for the most up-to-date version of the script.
+
+## Configuration
+
+There is no configuration for this add-on, except for the hotkey. You can set a custom hotkey for inserting randomized lists by following these steps:
+
+On Anki 2.1:
+
+1. Go to **Tools → Add-ons**, select the add-on in the list, and then click **Config**.
+2. In the Hotkey field, enter the hotkey that you want to use.
+3. Click **Save**.
+
+The default hotkey is `Alt+Shift+L`.
+
+## Troubleshooting
+
+If you are having problems with the add-on, please check the following:
+
+* Make sure that the JavaScript code is correctly inserted into the card template.
+
+If you are still having problems, please contact the author of the add-on.
+
+## Compatibility
+
+This add-on has been tested on AnkiDroid, Ankiewb, and AnkiDesktop.
