@@ -17,9 +17,11 @@ License: GNU AGPLv3 or later, https://www.gnu.org/licenses/agpl.html
 from aqt import editor, mw
 from anki.hooks import addHook
 
+
 def get_hotkey():
     config = mw.addonManager.getConfig(__name__)
     return config.get("hotkeyToggleList", "Alt+Shift+L")
+
 
 def insertShuffledList(self):
     self.web.eval("""
@@ -37,6 +39,7 @@ def insertShuffledList(self):
         document.execCommand('insertHTML', false, list.outerHTML);
     """)
 
+
 def setupButtons21(btns, editor):
     editor.insertShuffledList = insertShuffledList
     hotkey = get_hotkey()
@@ -45,5 +48,6 @@ def setupButtons21(btns, editor):
                            tip="Insert randomized list ({})".format(hotkey))
     btns.append(btn)
     return btns
+
 
 addHook("setupEditorButtons", setupButtons21)
