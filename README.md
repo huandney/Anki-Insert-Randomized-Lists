@@ -113,6 +113,7 @@ The default hotkey is `Alt+Shift+L`.
 If you are having problems with the add-on, please check the following:
 
 * Make sure that the JavaScript code is correctly inserted into the card template.
+* And that the content of the Front Template field is wrapped with `<span id="front">CONTENTS HERE</span>`.
 
 If you are still having problems, please contact the author of the add-on.
 
