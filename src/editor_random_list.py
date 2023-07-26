@@ -42,7 +42,7 @@ def setupButtons21(btns, editor):
     hotkey = get_hotkey()
     btn = editor.addButton(None, "randUlBtn", editor.insertShuffledList,
                            label="RL", keys=hotkey,
-                           tip="Insert randomized unordered list ({})".format(hotkey))
+                           tip="Insert randomized list ({})".format(hotkey))
     btns.append(btn)
     return btns
 
