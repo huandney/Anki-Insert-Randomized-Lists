@@ -46,5 +46,4 @@ def setupButtons21(btns, editor):
     btns.append(btn)
     return btns
 
-# Conectar os ganchos
 addHook("setupEditorButtons", setupButtons21)
