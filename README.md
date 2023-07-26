@@ -27,19 +27,19 @@ function run() {
         var indices;
 
         if (isFront) {
-            // Quando a frente do cartão é exibida, randomize e armazene a ordem
+            // When the front of the card is displayed, randomize and store the order
             indices = Array.from({length: children.length}, (_, i) => i);
             for (var j = indices.length - 1; j > 0; j--) {
                 var k = Math.floor(Math.random() * (j + 1));
-                [indices[j], indices[k]] = [indices[k], indices[j]];  // Swap elements.
+                [indices[j], indices[k]] = [indices[k], indices[j]];  // Swap elements
             }
             sessionStorage.setItem('indices' + i, JSON.stringify(indices));
         } else {
-            // Quando a resposta é exibida, recupere a ordem armazenada
+            // When the answer is displayed, retrieve the stored order
             indices = JSON.parse(sessionStorage.getItem('indices' + i));
         }
 
-        // Reordene os elementos com base em indices
+        // Reorder elements based on indices
         indices.forEach(function(index) {
             ul.appendChild(children[index]);
         });
@@ -68,19 +68,19 @@ function run() {
         var indices;
 
         if (isFront) {
-            // Quando a frente do cartão é exibida, randomize e armazene a ordem
+            // When the front of the card is displayed, randomize and store the order
             indices = Array.from({length: children.length}, (_, i) => i);
             for (var j = indices.length - 1; j > 0; j--) {
                 var k = Math.floor(Math.random() * (j + 1));
-                [indices[j], indices[k]] = [indices[k], indices[j]];  // Swap elements.
+                [indices[j], indices[k]] = [indices[k], indices[j]];  // Swap elements
             }
             sessionStorage.setItem('indices' + i, JSON.stringify(indices));
         } else {
-            // Quando a resposta é exibida, recupere a ordem armazenada
+            // When the answer is displayed, retrieve the stored order
             indices = JSON.parse(sessionStorage.getItem('indices' + i));
         }
 
-        // Reordene os elementos com base em indices
+        // Reorder elements based on indices
         indices.forEach(function(index) {
             ul.appendChild(children[index]);
         });
