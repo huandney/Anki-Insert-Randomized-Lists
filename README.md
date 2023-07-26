@@ -1,4 +1,4 @@
-# Add-on - Anki - Insert Randomized Lists
+# Add-on - Insert Randomized Lists
 This add-on allows you to create lists with the class "shuffle", which, combined with the script below, serves to randomize these lists.  . Originally developed by [Glutanimate](https://github.com/glutanimate/anki-addons-misc/tree/master/src/editor_random_list), this version has been reformulated and updated for recent Anki versions.
 
 ## Installation  
