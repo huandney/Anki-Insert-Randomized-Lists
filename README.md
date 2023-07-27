@@ -147,4 +147,4 @@ If you are having problems with the add-on, please check the following:
 * And that the content of the Front Template field is wrapped with `<span id="front">CONTENTS HERE</span>`.
 * See the compatibility section above.
 
-If you are still having problems, please contact the author of the add-on.
+If you are still encountering issues, or have any suggestions, do not hesitate to open a [new issue](https://github.com/huandney/Anki-Insert-Randomized-Lists/issues/new) or PR here. Describe the problem you are facing in detail, including the Anki version and any error messages you may be receiving.
