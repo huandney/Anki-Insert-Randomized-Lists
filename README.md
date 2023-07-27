@@ -125,15 +125,6 @@ ul.shuffle {
 
 * This style will not appear when reviewing your cards.
 
-## Troubleshooting
-
-If you are having problems with the add-on, please check the following:
-
-* Make sure that the JavaScript code is correctly inserted into the card template.
-* And that the content of the Front Template field is wrapped with `<span id="front">CONTENTS HERE</span>`.
-
-If you are still having problems, please contact the author of the add-on.
-
 ## Compatibility
 
 The randomization [script](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/main/template.html) and the add-on have been tested across various Anki platforms and versions to ensure maximum compatibility. Here are the details:
@@ -142,8 +133,18 @@ The randomization [script](https://github.com/huandney/Anki-Insert-Randomized-Li
     
 - **Anki Desktop (version 2.1.50 and later)**: The script works natively due to the implementation of `sessionStorage`.
     
-- **Anki Desktop (version 2.1.49 and earlier)**: For these versions, it is necessary to use the ['Cookie Monster'](https://ankiweb.net/shared/info/1501583548) add-on to ensure the functionality of the randomization script.
+- **Anki Desktop (version 2.1.49 and earlier)**: For these versions, it is necessary to use the [Cookie Monster](https://ankiweb.net/shared/info/1501583548) add-on to ensure the functionality of the randomization script.
     
 - **AnkiMobile**: The functionality of the script has not been officially tested, but it is likely to work correctly.
     
 - **Add-on Compatibility**: The add-on has been tested and confirmed to work correctly on all Anki versions, from 2.1.15 to 2.1.65 (and later).
+
+## Troubleshooting
+
+If you are having problems with the add-on, please check the following:
+
+* Make sure that the JavaScript code is correctly inserted into the card template.
+* And that the content of the Front Template field is wrapped with `<span id="front">CONTENTS HERE</span>`.
+* See the compatibility section above.
+
+If you are still having problems, please contact the author of the add-on.
