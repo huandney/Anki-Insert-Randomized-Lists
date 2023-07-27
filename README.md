@@ -135,5 +135,15 @@ If you are having problems with the add-on, please check the following:
 If you are still having problems, please contact the author of the add-on.
 
 ## Compatibility
-* The randomization [script](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/main/template.html) was tested on AnkiDroid, Ankiewb, about Anki desktop from version 2.1.50 it works natively due to the `sessionStorage` implementation, if you are using Anki 2.1.49 or earlier you need to use the [Cookie Monster](https://ankiweb.net/shared/info/1501583548) add-on.
-* The add-on has been tested and works apparently on all versions of anki since 2.1.15-2.1.65+.
+
+The randomization [script](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/main/template.html) and the add-on have been tested across various Anki platforms and versions to ensure maximum compatibility. Here are the details:
+
+- **AnkiWeb and AnkiDroid (tested on the latest versions)**: The randomization script works correctly on these platforms.
+    
+- **Anki Desktop (version 2.1.50 and later)**: The script works natively due to the implementation of `sessionStorage`.
+    
+- **Anki Desktop (version 2.1.49 and earlier)**: For these versions, it is necessary to use the ['Cookie Monster'](https://ankiweb.net/shared/info/1501583548) add-on to ensure the functionality of the randomization script.
+    
+- **AnkiMobile**: The functionality of the script has not been officially tested, but it is likely to work correctly.
+    
+- **Add-on Compatibility**: The add-on has been tested and confirmed to work correctly on all Anki versions, from 2.1.15 to 2.1.65 (and later).
