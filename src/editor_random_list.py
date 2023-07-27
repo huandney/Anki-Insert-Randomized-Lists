@@ -5,8 +5,7 @@ Anki Add-on: Insert Randomized Lists
 
 Inserts an unordered list with the 'shuffle' CSS class. 
 
-This can be used to randomize list items when coupled with
-a special card template.
+This can be used to randomize list items when coupled with a special card template.
 
 Originally developed by: Glutanimate (2017), https://glutanimate.com/
 Reformulated and updated for recent Anki versions by: huandney (2023), huandney@gmail.com
