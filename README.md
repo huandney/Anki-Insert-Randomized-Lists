@@ -148,3 +148,7 @@ If you are having problems with the add-on, please check the following:
 * See the compatibility section above.
 
 If you are still encountering issues, or have any suggestions, do not hesitate to open a [new issue](https://github.com/huandney/Anki-Insert-Randomized-Lists/issues) or PR here. Describe what you are facing in detail, including the Anki version and any error messages you may be receiving.
+
+## License
+
+This project is licensed under the GNU General Public License v3.0.
