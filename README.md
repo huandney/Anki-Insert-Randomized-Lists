@@ -5,8 +5,7 @@ This add-on allows you to create lists with the class "shuffle", which, combined
 1. Install the add-on from [AnkiWeb](https://ankiweb.net/shared/info/xxxxxx).
 2. In the main Anki window, go to **Tools → Manage Note Types** and find the note type where you want to enable list randomization (for example, Cloze). Proceed by clicking on **Cards** to invoke the card template editor.  Now apply the following changes:
 * Wrap the content of the Front Template field with `<span id="front">CONTENTS HERE</span>`.
-* Copy and paste the content of [`template.html`](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/main/template.html) into the front and back template of your cards.
-
+* Copy and paste the content of [`shuffle-template.html`](https://raw.githubusercontent.com/huandney/Anki-Insert-Randomized-Lists/improve-repo-organization/src/card/shuffle-template.html) into the front and back template of your cards.
    
 **Here is how the results should look, for example, for the Cloze grade type:**
 
@@ -94,7 +93,7 @@ run();
 
 **Note**
 
-The above JS script may change over time (as a result of updates, etc.). Make sure to always use the code in [`template.html`](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/main/template.html) for the most up-to-date version of the script.
+The above JS script may change over time (as a result of updates, etc.). Make sure to always use the code in [`shuffle-template.html`](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/improve-repo-organization/src/card/shuffle-template.html) for the most up-to-date version of the script.
 
 ## Configuration
 
@@ -127,7 +126,7 @@ ul.shuffle {
 
 ## Compatibility
 
-The randomization [script](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/main/template.html) and the add-on have been tested across various Anki platforms and versions to ensure maximum compatibility. Here are the details:
+The randomization [script](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/improve-repo-organization/src/card/shuffle-template.html) and the add-on have been tested across various Anki platforms and versions to ensure maximum compatibility. Here are the details:
 
 - **AnkiWeb and AnkiDroid (tested on the latest versions)**: The randomization script works correctly on these platforms.
     
