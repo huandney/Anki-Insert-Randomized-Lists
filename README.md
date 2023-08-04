@@ -156,6 +156,6 @@ If you are still encountering issues, or have any suggestions, do not hesitate t
 
 This project is licensed under the GNU General Public License v3.0.
 
-# Acknowledgements
+## Acknowledgements
 
 We would like to thank [Glutanimate](https://github.com/glutanimate/anki-addons-misc/tree/master/src/editor_random_list), the original developer of this add-on. This version has been reformulated and updated for recent Anki versions, but Glutanimate's initial work was instrumental in the development of this project.
