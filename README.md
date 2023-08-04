@@ -21,6 +21,8 @@ This repository contains two main components: an Anki add-on and a randomization
 </span>
 
 <script data-name="Randomized Lists" data-version="v1.0.0">
+// https://github.com/huandney/Anki-Insert-Randomized-Lists
+
 function run() {
     var ulElements = document.querySelectorAll('ul.shuffle');
     var isFront = document.getElementById("front");
@@ -62,6 +64,8 @@ run();
 {{Extra}}
 
 <script data-name="Randomized Lists" data-version="v1.0.0">
+// https://github.com/huandney/Anki-Insert-Randomized-Lists
+
 function run() {
     var ulElements = document.querySelectorAll('ul.shuffle');
     var isFront = document.getElementById("front");
