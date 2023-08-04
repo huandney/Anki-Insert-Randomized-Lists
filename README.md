@@ -16,7 +16,7 @@ This add-on allows you to create lists with the class "shuffle", which, combined
 {{cloze:Text}}
 </span>
 
-<script data-name="Insert Randomized Lists" data-version="v1.0.0">
+<script data-name="Shuffle Template" data-version="v1.0.0">
 function run() {
     var ulElements = document.querySelectorAll('ul.shuffle');
     var isFront = document.getElementById("front");
@@ -57,7 +57,7 @@ run();
 {{cloze:Text}}<br>
 {{Extra}}
 
-<script data-name="Insert Randomized Lists" data-version="v1.0.0">
+<script data-name="Shuffle Template" data-version="v1.0.0">
 function run() {
     var ulElements = document.querySelectorAll('ul.shuffle');
     var isFront = document.getElementById("front");
