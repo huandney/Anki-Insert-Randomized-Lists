@@ -93,7 +93,7 @@ run();
 
 **Note**
 
-The above JS script may change over time (as a result of updates, etc.). Make sure to always use the code in [`card`](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/improve-repo-organization/src/card) for the most up-to-date version of the script.
+The above JS script may change over time (as a result of updates, etc.). Make sure to always use the code in [`shuffle-template.html`](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/improve-repo-organization/src/card/shuffle-template.html) for the most up-to-date version of the script.
 
 ## Configuration
 
