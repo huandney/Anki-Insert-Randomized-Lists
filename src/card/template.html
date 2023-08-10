@@ -1,33 +1,30 @@
-<script data-name="Randomized Lists" data-version="v1.0.0">
+<script data-name="Randomized Lists" data-version="v2.0.0">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
     
+function reorderList(ul, indices) {
+    indices.forEach(index => ul.appendChild(ul.children[index]));
+}
+
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 function run() {
     var ulElements = document.querySelectorAll('ul.shuffle');
-    var isFront = document.getElementById("front");
+    var isBack = !!document.getElementById('back');
+    var allIndices = isBack ? JSON.parse(sessionStorage.getItem('allIndices')) : {};
 
-    for (var i = 0; i < ulElements.length; i++) {
-        var ul = ulElements[i];
-        var children = Array.from(ul.children);
-        var indices;
+    ulElements.forEach((ul, i) => {
+        var indices = allIndices[i] || shuffleArray(Array.from({length: ul.children.length}, (_, idx) => idx));
+        if (!isBack) allIndices[i] = indices;
+        reorderList(ul, indices);
+    });
 
-        if (isFront) {
-            // When the front of the card is displayed, randomize and store the order
-            indices = Array.from({length: children.length}, (_, i) => i);
-            for (var j = indices.length - 1; j > 0; j--) {
-                var k = Math.floor(Math.random() * (j + 1));
-                [indices[j], indices[k]] = [indices[k], indices[j]];  // Swap elements
-            }
-            sessionStorage.setItem('indices' + i, JSON.stringify(indices));
-        } else {
-            // When the answer is displayed, retrieve the stored order
-            indices = JSON.parse(sessionStorage.getItem('indices' + i));
-        }
-
-        // Reorder elements based on indices
-        indices.forEach(function(index) {
-            ul.appendChild(children[index]);
-        });
-    }
+    if (!isBack) sessionStorage.setItem('allIndices', JSON.stringify(allIndices));
 }
 
 run();
