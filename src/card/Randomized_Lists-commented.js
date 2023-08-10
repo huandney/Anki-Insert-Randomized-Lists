@@ -1,6 +1,3 @@
-<script data-name="Randomized Lists" data-version="v2.0.0">
-// https://github.com/huandney/Anki-Insert-Randomized-Lists
-
 // Function to reorder the items of a list based on the provided indices.
 function reorderList(ul, indices) {
     // For each index in the 'indices' array
@@ -11,7 +8,7 @@ function reorderList(ul, indices) {
     });
 }
 
-// Function to shuffle an array
+// Function to shuffle the elements of an array.
 function shuffleArray(array) {
     // Start the loop from the last element of the array
     for (var i = array.length - 1; i > 0; i--) {
@@ -50,5 +47,3 @@ function run() {
 
 // Run the main function
 run();
-
-</script>
