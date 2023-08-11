@@ -135,7 +135,7 @@ ul.shuffle {
 ```
 3. restart the editor.
 
-* This style will not appear when reviewing your cards.
+> This style will not appear when reviewing your cards.
 
 ## Compatibility
 
