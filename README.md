@@ -5,19 +5,19 @@ This repository contains two main components: an Anki add-on and a randomization
 1. **[Add-on](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/main/src/addon)**: Is an extension for Anki that allows the creation of lists with the "shuffle" class. These lists can then be randomized using the randomization script.
 2. **[Randomization script](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/main/src/card)**: A JavaScript script that can be inserted into the front and back of an Anki card to randomize lists that have the "shuffle" class.
 
-## Instalação
+## Setup and Integration
 
 1. ### Instalação
     - Install the add-on from [AnkiWeb](https://ankiweb.net/shared/info/1610249201).
 
-2. ### Acessando os Templates
+2. ### Accessing the Templates
     
-    - In the main Anki window, go to **Tools → Manage Note Types**.
+    - In the main Anki window, go to **Tools → Manage Note Types** or use the shortcut `CTRL`+`SHIFT`+`N`.
     - Find the note type where you want to enable list randomization (for example, Cloze).
     - Proceed by clicking on **Cards** to invoke the card template editor.
 
-3. ### Adicionando o Código na Parte Frontal
-Independentemente do tipo de cartão, você precisará adicionar o seguinte script, que é responsável por randomizar as listas:
+3. ### Adding the Code to the Front Side
+Regardless of the card type, you'll need to add the following script, which is responsible for randomizing the lists:
 ```html
 <script data-name="Randomized Lists" data-version="v2.0.0">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
@@ -51,16 +51,16 @@ function run() {
 run();
 </script>
 ```
-> Para mais detalhes sobre o script, [clique aqui.](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/Randomized-Lists-v2.0.0/src/card)
+> For more details on the script, [click here.](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/Randomized-Lists-v2.0.0/src/card)
 
-### 4. Adicionando o Código na Parte Traseira
-Estes codigos serão responsáveis por identificar e manter a ordem da randomização anteriomente feita na parte frontal.
-As instruções para inserir o código na parte traseira do cartão variam de acordo com a configuração específica do seu cartão:
+### 4. Adding Code to the Back Side
+These codes are responsible for identifying and maintaining the order of the randomization previously done on the front side.
+The instructions for inserting the code on the back of the card vary depending on the specific configuration of your card:
 
 <details>
-  <summary><strong>Cartões SEM o Campo FrontSide no Verso</strong></summary>
+  <summary><strong>Cards WITHOUT the FrontSide Field on the Back</strong></summary>
     
-Se o seu cartão não possui o campo `{{FrontSide}}`, você deve adicionar o script completo com o acrescento do id="black ao metadados, como abaixo:
+If your card does not have the `{{FrontSide}}` field, you should add the entire script with the addition of the id="black" to the metadata, as shown below:
   
 ```html
 <script data-name="Randomized Lists" data-version="v2.0.0" id="black">
@@ -98,14 +98,14 @@ run();
 </details>
 
 <details>
-  <summary><strong>Cartões com Campo FrontSide no Verso</strong></summary>
+  <summary><strong>Cards with FrontSide Field on the Back</strong></summary>
     
-Para cartões que possuem o campo `{{FrontSide}}`, você não precisa adicionar o script inteiro novamente. Basta inserir a seguinte metatag:
+For cards that have the `{{FrontSide}}` field, you don't need to add the entire script again. Simply insert the following metatag:
     
 ```html
 <meta id="back">`
 ```
-> Essa metatag assegura que o script reconheça corretamente a parte traseira do cartão e mantenha a ordem de randomização feita anteriormente na parte frontal.
+> This metatag ensures that the script correctly recognizes the back of the card and maintains the randomization order previously set on the front.
 </details>
 
 ## Add-on Configuration
