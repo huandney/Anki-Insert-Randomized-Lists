@@ -5,105 +5,110 @@ This repository contains two main components: an Anki add-on and a randomization
 1. **[Add-on](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/main/src/addon)**: Is an extension for Anki that allows the creation of lists with the "shuffle" class. These lists can then be randomized using the randomization script.
 2. **[Randomization script](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/main/src/card)**: A JavaScript script that can be inserted into the front and back of an Anki card to randomize lists that have the "shuffle" class.
 
-## Installation  
-1. Install the add-on from [AnkiWeb](https://ankiweb.net/shared/info/xxxxxx).
-2. In the main Anki window, go to **Tools → Manage Note Types** and find the note type where you want to enable list randomization (for example, Cloze). Proceed by clicking on **Cards** to invoke the card template editor.  Now apply the following changes:
-* Wrap the content of the Front Template field with `<span id="front">CONTENTS HERE</span>`.
-* Copy and paste the content of [`template.html`](https://raw.githubusercontent.com/huandney/Anki-Insert-Randomized-Lists/main/src/card/template.html) into the front and back template of your cards.
-   
-**Here is how the results should look, for example, for the Cloze grade type:**
+## Setup and Integration
 
-**Front Template**
+1. ### Instalação
+    - Install the add-on from [AnkiWeb](https://ankiweb.net/shared/info/1610249201).
 
+2. ### Accessing the Templates
+    
+    - In the main Anki window, go to **Tools → Manage Note Types** or use the shortcut `CTRL+SHIFT+N`.
+    - Find the note type where you want to enable list randomization (for example, Cloze).
+    - Proceed by clicking on **Cards** to invoke the card template editor.
+
+3. ### Adding the Code to the Front Side
+Regardless of the card type, you'll need to add the following script, which is responsible for randomizing the lists:
 ```html
-<span id="front">
-{{cloze:Text}}
-</span>
-
-<script data-name="Randomized Lists" data-version="v1.0.0">
+<script data-name="Randomized Lists" data-version="v2.0.0">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
-
-function run() {
-    var ulElements = document.querySelectorAll('ul.shuffle');
-    var isFront = document.getElementById("front");
-
-    for (var i = 0; i < ulElements.length; i++) {
-        var ul = ulElements[i];
-        var children = Array.from(ul.children);
-        var indices;
-
-        if (isFront) {
-            // When the front of the card is displayed, randomize and store the order
-            indices = Array.from({length: children.length}, (_, i) => i);
-            for (var j = indices.length - 1; j > 0; j--) {
-                var k = Math.floor(Math.random() * (j + 1));
-                [indices[j], indices[k]] = [indices[k], indices[j]];  // Swap elements
-            }
-            sessionStorage.setItem('indices' + i, JSON.stringify(indices));
-        } else {
-            // When the answer is displayed, retrieve the stored order
-            indices = JSON.parse(sessionStorage.getItem('indices' + i));
-        }
-
-        // Reorder elements based on indices
-        indices.forEach(function(index) {
-            ul.appendChild(children[index]);
-        });
-    }
+    
+function reorderList(ul, indices) {
+    indices.forEach(index => ul.appendChild(ul.children[index]));
 }
 
-run();
-</script>
-
-```
-
-**Back Template**
-
-```html
-{{cloze:Text}}<br>
-{{Extra}}
-
-<script data-name="Randomized Lists" data-version="v1.0.0">
-// https://github.com/huandney/Anki-Insert-Randomized-Lists
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
 
 function run() {
     var ulElements = document.querySelectorAll('ul.shuffle');
-    var isFront = document.getElementById("front");
+    var isBack = !!document.getElementById('back');
+    var allIndices = isBack ? JSON.parse(sessionStorage.getItem('allIndices')) : {};
 
-    for (var i = 0; i < ulElements.length; i++) {
-        var ul = ulElements[i];
-        var children = Array.from(ul.children);
-        var indices;
+    ulElements.forEach((ul, i) => {
+        var indices = allIndices[i] || shuffleArray(Array.from({length: ul.children.length}, (_, idx) => idx));
+        if (!isBack) allIndices[i] = indices;
+        reorderList(ul, indices);
+    });
 
-        if (isFront) {
-            // When the front of the card is displayed, randomize and store the order
-            indices = Array.from({length: children.length}, (_, i) => i);
-            for (var j = indices.length - 1; j > 0; j--) {
-                var k = Math.floor(Math.random() * (j + 1));
-                [indices[j], indices[k]] = [indices[k], indices[j]];  // Swap elements
-            }
-            sessionStorage.setItem('indices' + i, JSON.stringify(indices));
-        } else {
-            // When the answer is displayed, retrieve the stored order
-            indices = JSON.parse(sessionStorage.getItem('indices' + i));
-        }
-
-        // Reorder elements based on indices
-        indices.forEach(function(index) {
-            ul.appendChild(children[index]);
-        });
-    }
+    if (!isBack) sessionStorage.setItem('allIndices', JSON.stringify(allIndices));
 }
 
 run();
 </script>
 ```
+> For more details on the script, [click here.](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/Randomized-Lists-v2.0.0/src/card)
 
-**Note**
+### 4. Adding Code to the Back Side
+These codes are responsible for identifying and maintaining the order of the randomization previously done on the front side.
+The instructions for inserting the code on the back of the card vary depending on the specific configuration of your card:
 
-The above JS script may change over time (as a result of updates, etc.). Make sure to always use the code in [`template.html`](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/main/src/card/template.html) for the most up-to-date version of the script.
+<details>
+  <summary><strong>Cards WITHOUT the FrontSide Field on the Back</strong></summary>
+    
+If your card does not have the `{{FrontSide}}` field, you should add the entire script with the addition of the id="black" to the metadata, as shown below:
+  
+```html
+<script data-name="Randomized Lists" data-version="v2.0.0" id="black">
+// https://github.com/huandney/Anki-Insert-Randomized-Lists
+    
+function reorderList(ul, indices) {
+    indices.forEach(index => ul.appendChild(ul.children[index]));
+}
 
-## Configuration
+function shuffleArray(array) {
+    for (var i = array.length - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
+function run() {
+    var ulElements = document.querySelectorAll('ul.shuffle');
+    var isBack = !!document.getElementById('back');
+    var allIndices = isBack ? JSON.parse(sessionStorage.getItem('allIndices')) : {};
+
+    ulElements.forEach((ul, i) => {
+        var indices = allIndices[i] || shuffleArray(Array.from({length: ul.children.length}, (_, idx) => idx));
+        if (!isBack) allIndices[i] = indices;
+        reorderList(ul, indices);
+    });
+
+    if (!isBack) sessionStorage.setItem('allIndices', JSON.stringify(allIndices));
+}
+
+run();
+</script>
+```
+</details>
+
+<details>
+  <summary><strong>Cards with FrontSide Field on the Back</strong></summary>
+    
+For cards that have the `{{FrontSide}}` field, you don't need to add the entire script again. Simply insert the following metatag:
+    
+```html
+<meta id="back">
+```
+> This metatag ensures that the script correctly recognizes the back of the card and maintains the randomization order previously set on the front.
+</details>
+
+## Add-on Configuration
 
 There is no configuration for this add-on, except for the hotkey. You can set a custom hotkey for inserting randomized lists by following these steps:
 
@@ -130,7 +135,7 @@ ul.shuffle {
 ```
 3. restart the editor.
 
-* This style will not appear when reviewing your cards.
+> This style will not appear when reviewing your cards.
 
 ## Compatibility
 
@@ -150,8 +155,8 @@ The randomization [script](https://github.com/huandney/Anki-Insert-Randomized-Li
 
 If you are having problems with the add-on, please check the following:
 
-* Make sure that the JavaScript code is correctly inserted into the card template.
-* And that the content of the Front Template field is wrapped with `<span id="front">CONTENTS HERE</span>`.
+* Make sure that the JavaScript code is [correctly inserted](#adding-the-code-to-the-front-side) into the card template.
+* For cards without the FrontSide field on the back, make sure the script includes `id="black"`. For cards with the FrontSide field, the `<meta id="back">` tag should be present. [Details here.](#4-adding-code-to-the-back-side)
 * See the compatibility section above.
 
 If you are still encountering issues, or have any suggestions, do not hesitate to open a [new issue](https://github.com/huandney/Anki-Insert-Randomized-Lists/issues) or PR here. Describe what you are facing in detail, including the Anki version and any error messages you may be receiving.
@@ -163,3 +168,5 @@ This project is licensed under the GNU General Public License v3.0.
 ## Acknowledgements
 
 We would like to thank [Glutanimate](https://github.com/glutanimate/anki-addons-misc/tree/master/src/editor_random_list), the original developer of this add-on. This version has been reformulated and updated for recent Anki versions, but Glutanimate's initial work was instrumental in the development of this project.
+
+
