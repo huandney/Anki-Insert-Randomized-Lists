@@ -58,8 +58,9 @@ Estes codigos serão responsáveis por identificar e manter a ordem da randomiza
 As instruções para inserir o código na parte traseira do cartão variam de acordo com a configuração específica do seu cartão:
 
 <details>
-  <summary><strong>Cartões SEM o Campo {{FrontSide}} no Verso</strong></summary>
-No verso desses cartões, você deve adicionar o script completo com o acrescento do id="black ao metadados, como abaixo:
+  <summary><strong>Cartões SEM o Campo FrontSide no Verso</strong></summary>
+    
+Se o seu cartão não possui o campo `{{FrontSide}}` no verso, você deve adicionar o script completo com o acrescento do id="black ao metadados, como abaixo:
   
 ```html
 <script data-name="Randomized Lists" data-version="v2.0.0" id="black">
@@ -97,8 +98,9 @@ run();
 </details>
 
 <details>
-  <summary><strong>Cartões com Campo {{FrontSide}} no Verso</strong></summary>
-Para cartões que possuem o campo {{FrontSide}} no verso, você não precisa adicionar o script inteiro novamente. Basta inserir a seguinte metatag:
+  <summary><strong>Cartões com Campo FrontSide no Verso</strong></summary>
+    
+Para cartões que possuem o campo `{{FrontSide}}` no verso, você não precisa adicionar o script inteiro novamente. Basta inserir a seguinte metatag:
     
 ```html
 <meta id="back">`
