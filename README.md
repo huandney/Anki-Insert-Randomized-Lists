@@ -58,7 +58,7 @@ These codes are responsible for identifying and maintaining the order of the ran
 The instructions for inserting the code on the back of the card vary depending on the specific configuration of your card:
 
 <details>
-  <summary><strong>Cards WITHOUT the FrontSide Field on the Back</strong></summary>
+  <summary><strong>Cards without the FrontSide Field on the Back</strong></summary>
     
 If your card does not have the `{{FrontSide}}` field, you should add the entire script with the addition of the `id="back"` to the metadata, as shown below:
   
