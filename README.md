@@ -7,7 +7,7 @@ This repository contains two main components: an Anki add-on and a randomization
 
 ## Setup and Integration
 
-1. ### Instalação
+1. ### Installation
     - Install the add-on from [AnkiWeb](https://ankiweb.net/shared/info/1610249201).
 
 2. ### Accessing the Templates
