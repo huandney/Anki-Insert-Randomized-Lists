@@ -103,7 +103,7 @@ run();
 For cards that have the `{{FrontSide}}` field, you don't need to add the entire script again. Simply insert the following metatag:
     
 ```html
-<meta id="back">`
+<meta id="back">
 ```
 > This metatag ensures that the script correctly recognizes the back of the card and maintains the randomization order previously set on the front.
 </details>
