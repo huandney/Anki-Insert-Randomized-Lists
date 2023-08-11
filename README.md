@@ -156,7 +156,7 @@ The randomization [script](https://github.com/huandney/Anki-Insert-Randomized-Li
 If you are having problems with the add-on, please check the following:
 
 * Make sure that the JavaScript code is [correctly inserted](#adding-the-code-to-the-front-side) into the card template.
-* For cards without the {{FrontSide}} field on the back, make sure the script includes id="black". For cards with the {{FrontSide}} field, the <meta id="back"> tag should be present. [Details here.](#4-adding-code-to-the-back-side)
+* For cards without the FrontSide field on the back, make sure the script includes `id="black"`. For cards with the FrontSide field, the `<meta id="back">` tag should be present. [Details here.](#4-adding-code-to-the-back-side)
 * See the compatibility section above.
 
 If you are still encountering issues, or have any suggestions, do not hesitate to open a [new issue](https://github.com/huandney/Anki-Insert-Randomized-Lists/issues) or PR here. Describe what you are facing in detail, including the Anki version and any error messages you may be receiving.
