@@ -60,7 +60,7 @@ As instruções para inserir o código na parte traseira do cartão variam de ac
 <details>
   <summary><strong>Cartões SEM o Campo FrontSide no Verso</strong></summary>
     
-Se o seu cartão não possui o campo `{{FrontSide}}` no verso, você deve adicionar o script completo com o acrescento do id="black ao metadados, como abaixo:
+Se o seu cartão não possui o campo `{{FrontSide}}`, você deve adicionar o script completo com o acrescento do id="black ao metadados, como abaixo:
   
 ```html
 <script data-name="Randomized Lists" data-version="v2.0.0" id="black">
@@ -100,7 +100,7 @@ run();
 <details>
   <summary><strong>Cartões com Campo FrontSide no Verso</strong></summary>
     
-Para cartões que possuem o campo `{{FrontSide}}` no verso, você não precisa adicionar o script inteiro novamente. Basta inserir a seguinte metatag:
+Para cartões que possuem o campo `{{FrontSide}}`, você não precisa adicionar o script inteiro novamente. Basta inserir a seguinte metatag:
     
 ```html
 <meta id="back">`
