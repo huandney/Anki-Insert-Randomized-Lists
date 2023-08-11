@@ -16,12 +16,8 @@ This repository contains two main components: an Anki add-on and a randomization
     - Find the note type where you want to enable list randomization (for example, Cloze).
     - Proceed by clicking on **Cards** to invoke the card template editor.
 
-> Agora, podemos ter duas situações possíveis:
-
-#### Para cartões que **NÃO** possuem o campo `{{FrontSide}}` no verso:
-
-<details><summary><b>Template Frontal</b></summary>
-   
+#### Adicionando o Código na Parte Frontal
+Independentemente do tipo de cartão, você precisará adicionar o seguinte script, que é responsável por randomizar as listas:
 ```html
 <script data-name="Randomized Lists" data-version="v2.0.0">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
@@ -55,9 +51,15 @@ function run() {
 run();
 </script>
 ```
+> [Detalhes completos do script.](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/Randomized-Lists-v2.0.0/src/card)
 
-</details> <details><summary><b>Template Verso</b></summary>
-   
+#### Adicionando o Código na Parte Traseira
+Estes codigos serão responsáveis por identificar e manter a ordem da randomização anteriomente feita na parte frontal.
+As instruções para inserir o código na parte traseira do cartão variam de acordo com a configuração específica do seu cartão:
+
+##### a. Para cartões que NÃO possuem o campo {{FrontSide}} no verso
+No verso desses cartões, você deve adicionar o script completo com o acrescento do id="black ao metadados, como abaixo:
+
 ```html
 <script data-name="Randomized Lists" data-version="v2.0.0" id="black">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
@@ -92,63 +94,14 @@ run();
 </script>
 ```
 
-</details>
-
----
-
-#### Para cartões que possuem o campo `{{FrontSide}}` no verso:
-
-<details><summary><b>Template Frontal</b></summary>
-
-```html
-<script data-name="Randomized Lists" data-version="v2.0.0">
-// https://github.com/huandney/Anki-Insert-Randomized-Lists
-    
-function reorderList(ul, indices) {
-    indices.forEach(index => ul.appendChild(ul.children[index]));
-}
-
-function shuffleArray(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-function run() {
-    var ulElements = document.querySelectorAll('ul.shuffle');
-    var isBack = !!document.getElementById('back');
-    var allIndices = isBack ? JSON.parse(sessionStorage.getItem('allIndices')) : {};
-
-    ulElements.forEach((ul, i) => {
-        var indices = allIndices[i] || shuffleArray(Array.from({length: ul.children.length}, (_, idx) => idx));
-        if (!isBack) allIndices[i] = indices;
-        reorderList(ul, indices);
-    });
-
-    if (!isBack) sessionStorage.setItem('allIndices', JSON.stringify(allIndices));
-}
-
-run();
-</script>
-```
-
-</details> <details><summary><b>Template Verso</b></summary>
-
+##### b. Para cartões que possuem o campo {{FrontSide}} no verso
+Se o seu cartão possui o campo {{FrontSide}} no verso, a configuração é diferente. Em vez de inserir o código inteiro novamente, você adicionará uma metatag que serve como identificador:
 ```html
 <meta id="back">`
 ```
-</details>
-
 ---
 
 > Aplique as seguintes mudanças ao adicionar o script acima aos seus modelos de cartão conforme indicado.
-
-
-
-
-
 
 ## Add-on Configuration
 
