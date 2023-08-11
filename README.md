@@ -51,15 +51,16 @@ function run() {
 run();
 </script>
 ```
-> [Detalhes completos do script.](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/Randomized-Lists-v2.0.0/src/card)
+> Para mais detalhes sobre o script, [clique aqui.](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/Randomized-Lists-v2.0.0/src/card)
 
 ### 4. Adicionando o Código na Parte Traseira
 Estes codigos serão responsáveis por identificar e manter a ordem da randomização anteriomente feita na parte frontal.
 As instruções para inserir o código na parte traseira do cartão variam de acordo com a configuração específica do seu cartão:
 
-#### a. Para cartões que NÃO possuem o campo {{FrontSide}} no verso
+<details>
+  <summary><strong>Cartões SEM o Campo {{FrontSide}} no Verso</strong></summary>
 No verso desses cartões, você deve adicionar o script completo com o acrescento do id="black ao metadados, como abaixo:
-
+  
 ```html
 <script data-name="Randomized Lists" data-version="v2.0.0" id="black">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
@@ -93,15 +94,17 @@ function run() {
 run();
 </script>
 ```
+</details>
 
-#### b. Para cartões que possuem o campo {{FrontSide}} no verso
-Se o seu cartão possui o campo {{FrontSide}} no verso, a configuração é diferente. Em vez de inserir o código inteiro novamente, você adicionará uma metatag que serve como identificador:
+<details>
+  <summary><strong>Cartões com Campo {{FrontSide}} no Verso</strong></summary>
+Para cartões que possuem o campo {{FrontSide}} no verso, você não precisa adicionar o script inteiro novamente. Basta inserir a seguinte metatag:
+    
 ```html
 <meta id="back">`
 ```
----
-
-> Aplique as seguintes mudanças ao adicionar o script acima aos seus modelos de cartão conforme indicado.
+> Essa metatag assegura que o script reconheça corretamente a parte traseira do cartão e mantenha a ordem de randomização feita anteriormente na parte frontal.
+</details>
 
 ## Add-on Configuration
 
