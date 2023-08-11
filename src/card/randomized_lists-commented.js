@@ -1,3 +1,7 @@
+// Name: Randomized Lists
+// Version: v2.0.0
+// https://github.com/huandney/Anki-Insert-Randomized-Lists
+
 // Function to reorder the items of a list based on the provided indices.
 function reorderList(ul, indices) {
     indices.forEach(index => ul.appendChild(ul.children[index]));
