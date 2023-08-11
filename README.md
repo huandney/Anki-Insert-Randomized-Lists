@@ -10,13 +10,13 @@ This repository contains two main components: an Anki add-on and a randomization
 1. ### Instalação
     - Install the add-on from [AnkiWeb](https://ankiweb.net/shared/info/1610249201).
 
-2. ### Modificando os Templates
+2. ### Acessando os Templates
     
     - In the main Anki window, go to **Tools → Manage Note Types**.
     - Find the note type where you want to enable list randomization (for example, Cloze).
     - Proceed by clicking on **Cards** to invoke the card template editor.
 
-#### Adicionando o Código na Parte Frontal
+3. ### Adicionando o Código na Parte Frontal
 Independentemente do tipo de cartão, você precisará adicionar o seguinte script, que é responsável por randomizar as listas:
 ```html
 <script data-name="Randomized Lists" data-version="v2.0.0">
@@ -53,11 +53,11 @@ run();
 ```
 > [Detalhes completos do script.](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/Randomized-Lists-v2.0.0/src/card)
 
-#### Adicionando o Código na Parte Traseira
+### 4. Adicionando o Código na Parte Traseira
 Estes codigos serão responsáveis por identificar e manter a ordem da randomização anteriomente feita na parte frontal.
 As instruções para inserir o código na parte traseira do cartão variam de acordo com a configuração específica do seu cartão:
 
-##### a. Para cartões que NÃO possuem o campo {{FrontSide}} no verso
+#### a. Para cartões que NÃO possuem o campo {{FrontSide}} no verso
 No verso desses cartões, você deve adicionar o script completo com o acrescento do id="black ao metadados, como abaixo:
 
 ```html
@@ -94,7 +94,7 @@ run();
 </script>
 ```
 
-##### b. Para cartões que possuem o campo {{FrontSide}} no verso
+#### b. Para cartões que possuem o campo {{FrontSide}} no verso
 Se o seu cartão possui o campo {{FrontSide}} no verso, a configuração é diferente. Em vez de inserir o código inteiro novamente, você adicionará uma metatag que serve como identificador:
 ```html
 <meta id="back">`
