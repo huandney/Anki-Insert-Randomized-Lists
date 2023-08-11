@@ -12,7 +12,7 @@ This repository contains two main components: an Anki add-on and a randomization
 
 2. ### Accessing the Templates
     
-    - In the main Anki window, go to **Tools → Manage Note Types** or use the shortcut `CTRL`+`SHIFT`+`N`.
+    - In the main Anki window, go to **Tools → Manage Note Types** or use the shortcut `CTRL+SHIFT+N`.
     - Find the note type where you want to enable list randomization (for example, Cloze).
     - Proceed by clicking on **Cards** to invoke the card template editor.
 
