@@ -19,33 +19,31 @@ This repository contains two main components: an Anki add-on and a randomization
 3. ### Adding the Code to the Front Side
 Regardless of the card type, you'll need to add the following script, which is responsible for randomizing the lists:
 ```html
-<script data-name="Randomized Lists" data-version="v2.0.0">
+<script data-name="Randomized Lists" data-version="v2.1.0">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
     
-function reorderList(ul, indices) {
-    indices.forEach(index => ul.appendChild(ul.children[index]));
+function reorder(elements, indices) {
+    indices.forEach(index => elements.appendChild(elements.children[index]));
 }
 
-function shuffleArray(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
 }
 
 function run() {
-    var ulElements = document.querySelectorAll('ul.shuffle');
-    var isBack = !!document.getElementById('back');
-    var allIndices = isBack ? JSON.parse(sessionStorage.getItem('allIndices')) : {};
+    const uls = document.querySelectorAll('ul.shuffle');
+    let indices = JSON.parse(sessionStorage.getItem('allIndices')) || {};
 
-    ulElements.forEach((ul, i) => {
-        var indices = allIndices[i] || shuffleArray(Array.from({length: ul.children.length}, (_, idx) => idx));
-        if (!isBack) allIndices[i] = indices;
-        reorderList(ul, indices);
-    });
+    if (!document.getElementById('back')) {
+        uls.forEach((ul, i) => indices[i] = shuffle([...Array(ul.children.length).keys()]));
+        sessionStorage.setItem('allIndices', JSON.stringify(indices));
+    }
 
-    if (!isBack) sessionStorage.setItem('allIndices', JSON.stringify(allIndices));
+    uls.forEach((ul, i) => reorder(ul, indices[i]));
 }
 
 run();
@@ -63,33 +61,31 @@ The instructions for inserting the code on the back of the card vary depending o
 If your card does not have the `{{FrontSide}}` field, you should add the entire script with the addition of the `id="back"` to the metadata, as shown below:
   
 ```html
-<script data-name="Randomized Lists" data-version="v2.0.0" id="back">
+<script data-name="Randomized Lists" data-version="v2.1.0" id="back">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
     
-function reorderList(ul, indices) {
-    indices.forEach(index => ul.appendChild(ul.children[index]));
+function reorder(elements, indices) {
+    indices.forEach(index => elements.appendChild(elements.children[index]));
 }
 
-function shuffleArray(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
 }
 
 function run() {
-    var ulElements = document.querySelectorAll('ul.shuffle');
-    var isBack = !!document.getElementById('back');
-    var allIndices = isBack ? JSON.parse(sessionStorage.getItem('allIndices')) : {};
+    const uls = document.querySelectorAll('ul.shuffle');
+    let indices = JSON.parse(sessionStorage.getItem('allIndices')) || {};
 
-    ulElements.forEach((ul, i) => {
-        var indices = allIndices[i] || shuffleArray(Array.from({length: ul.children.length}, (_, idx) => idx));
-        if (!isBack) allIndices[i] = indices;
-        reorderList(ul, indices);
-    });
+    if (!document.getElementById('back')) {
+        uls.forEach((ul, i) => indices[i] = shuffle([...Array(ul.children.length).keys()]));
+        sessionStorage.setItem('allIndices', JSON.stringify(indices));
+    }
 
-    if (!isBack) sessionStorage.setItem('allIndices', JSON.stringify(allIndices));
+    uls.forEach((ul, i) => reorder(ul, indices[i]));
 }
 
 run();
