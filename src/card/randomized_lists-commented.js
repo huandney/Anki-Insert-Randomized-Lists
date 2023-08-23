@@ -1,41 +1,42 @@
 // Name: Randomized Lists
-// Version: v2.0.0
+// Version: v2.1.0
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
 
-// Function to reorder the items of a list based on the provided indices.
-function reorderList(ul, indices) {
-    indices.forEach(index => ul.appendChild(ul.children[index]));
+// Function to reorder elements in a list based on provided indices.
+function reorder(elements, indices) {
+    indices.forEach(index => elements.appendChild(elements.children[index]));
 }
 
-// Function to shuffle the elements of an array.
-function shuffleArray(array) {
-    for (var i = array.length - 1; i > 0; i--) {
-        var j = Math.floor(Math.random() * (i + 1));
+// Function to shuffle an array and return the shuffled version.
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
 }
 
 function run() {
-    // Select all lists that need to be shuffled
-    var ulElements = document.querySelectorAll('ul.shuffle');
-    // Check if it's on the back of the card.
-    var isBack = !!document.getElementById('back');
-    // Retrieve all stored indices or initialize an empty object.
-    var allIndices = isBack ? JSON.parse(sessionStorage.getItem('allIndices')) : {};
+    // Select all list elements with the 'shuffle' class.
+    const uls = document.querySelectorAll('ul.shuffle');
+    
+    // Attempt to retrieve indices previously stored in sessionStorage.
+    // If there's no data in sessionStorage, initialize an empty object.
+    let indices = JSON.parse(sessionStorage.getItem('allIndices')) || {};
 
-    ulElements.forEach((ul, i) => {
-        // Use stored indices or shuffle to get new indices.
-        var indices = allIndices[i] || shuffleArray(Array.from({length: ul.children.length}, (_, idx) => idx));
-        // If on the front, store the generated indices.
-        if (!isBack) allIndices[i] = indices;
-        // Reorder the list based on indices.
-        reorderList(ul, indices);
-    });
+    // If on the front side (doesn't have an element with ID 'back'), shuffle the lists.
+    if (!document.getElementById('back')) {
+        uls.forEach((ul, i) => 
+            // For each list, generate an array of indices and shuffle it.
+            indices[i] = shuffle([...Array(ul.children.length).keys()])
+        );
+        // Store the shuffled indices in sessionStorage.
+        sessionStorage.setItem('allIndices', JSON.stringify(indices));
+    }
 
-    // If on the front, store all indices in sessionStorage.
-    if (!isBack) sessionStorage.setItem('allIndices', JSON.stringify(allIndices));
+    // For each list, reorder the elements based on the retrieved or generated indices.
+    uls.forEach((ul, i) => reorder(ul, indices[i]));
 }
 
-// Run the main function
+// Execute the main function when the script is loaded.
 run();
