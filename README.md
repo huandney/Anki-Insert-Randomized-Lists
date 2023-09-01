@@ -96,12 +96,13 @@ run();
 <details>
   <summary><strong>Cards with FrontSide Field on the Back</strong></summary>
     
-For cards that have the `{{FrontSide}}` field, you don't need to add the entire script again. Simply insert the following metatag:
+For cards that use the FrontSide field on the back, you don't need to add the entire script again. Simply insert the following metatag before the `{{FrontSide}}` field:
     
 ```html
 <meta id="back">
 ```
-> This metatag ensures that the script correctly recognizes the back of the card and maintains the randomization order previously set on the front.
+> - This metatag ensures that the script correctly recognizes the back of the card and maintains the randomization order previously set on the front.
+> - Placing this metatag before the `{{FrontSide}}` field is crucial for proper functioning on AnkiDroid.
 </details>
 
 ## Add-on Configuration
@@ -152,7 +153,7 @@ The randomization [script](https://github.com/huandney/Anki-Insert-Randomized-Li
 If you are having problems with the add-on, please check the following:
 
 * Make sure that the JavaScript code is [correctly inserted](#adding-the-code-to-the-front-side) into the card template.
-* For cards without the FrontSide field on the back, make sure the script includes `id="back"`. For cards with the FrontSide field, the `<meta id="back">` tag should be present. [Details here](#4-adding-code-to-the-back-side).
+* For cards without the FrontSide field on the back, make sure the script includes `id="back"`. For cards that use the FrontSide field, the `<meta id="back">` tag must be present and should be placed **before** the `{{FrontSide}}` field for proper functioning on AnkiDroid. [Details here](#4-adding-code-to-the-back-side).
 * See the compatibility section above.
 
 If you are still encountering issues, or have any suggestions, do not hesitate to open a [new issue](https://github.com/huandney/Anki-Insert-Randomized-Lists/issues) or PR here. Describe what you are facing in detail, including the Anki version and any error messages you may be receiving.
