@@ -107,44 +107,27 @@ For cards that use the FrontSide field on the back, you don't need to add the en
 
 ## Add-on Configuration
 
-There is no configuration for this add-on, except for the hotkey. You can set a custom hotkey for inserting randomized lists by following these steps:
+Modify the add-on settings via **Tools → Add-ons → Insert Randomized Lists**, and then click **Config**. Available options:
 
-On Anki 2.1:
+- `hotkey_toggle_list`: The hotkey for inserting randomized lists. Default: `Alt+Shift+L`.
+- `enable_custom_style`: Enable custom styles for the editor fields. Default: `true`.
+- `custom_style`: CSS style to apply to the editor fields.
 
-1. Go to **Tools → Add-ons**, select the add-on in the list, and then click **Config**.
-2. In the Hotkey field, enter the hotkey that you want to use.
-3. Click **Save**.
+> Custom Styles is only for differentiating random lists from regular lists in the editor. This style will not appear when reviewing your cards.
 
-The default hotkey is `Alt+Shift+L`.
-
-### Optional
-If you want to differentiate, only in the Editor, the random lists from the regular lists we can use the excellent [add-on](https://ankiweb.net/shared/info/181103283) made by [@kleinerpirat](https://github.com/kleinerpirat). For example:
+Example of custom style applied in the editor:
 
 ![Captura de tela de 2023-07-26 19-23-22](https://github.com/huandney/Anki-Insert-Randomized-Lists/assets/19948348/1facd2a6-a565-4124-bc45-eaf105a2124a)
-
-
-1. Navigate to the add-on folder (Tools → Add-ons → CSS Injector - Change default editor styles → click "View Files")
-2. Add the code below or another style of your choice in `field.css` inside `user_files`.
- ```css
-ul.shuffle {
-    border: 2px dotted gray;
-}
-```
-3. restart the editor.
-
-> This style will not appear when reviewing your cards.
 
 ## Compatibility
 
 The randomization [script](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/main/src/card/template.html) and the add-on have been tested across various Anki platforms and versions to ensure maximum compatibility. Here are the details:
 
-- **AnkiWeb and AnkiDroid (tested on the latest versions)**: The randomization script works correctly on these platforms.
+- **AnkiWeb, AnkiDroid and AnkiMobile (tested on the latest versions)**: The randomization script works correctly on these platforms.
     
 - **Anki Desktop (version 2.1.50 and later)**: The script works natively due to the implementation of `sessionStorage`.
     
 - **Anki Desktop (version 2.1.49 and earlier)**: For these versions, it is necessary to use the [Cookie Monster](https://ankiweb.net/shared/info/1501583548) add-on to ensure the functionality of the randomization script.
-    
-- **AnkiMobile**: The functionality of the script has not been officially tested, but it is likely to work correctly.
     
 - **Add-on Compatibility**: The add-on has been tested and confirmed to work correctly on all Anki versions, from 2.1.15 to 2.1.65 (and later).
 
@@ -166,4 +149,4 @@ This project is licensed under the GNU General Public License v3.0.
 
 We would like to thank [Glutanimate](https://github.com/glutanimate/anki-addons-misc/tree/master/src/editor_random_list), the original developer of this add-on. This version has been reformulated and updated for recent Anki versions, but Glutanimate's initial work was instrumental in the development of this project.
 
-
+Special thanks to [kleinerpirat](https://github.com/kleinerpirat) for the [Anki CSS Injector add-on](https://github.com/kleinerpirat/anki-css-injector), which provided the code for implementing custom styles in the editor fields.
