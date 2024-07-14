@@ -51,7 +51,7 @@ run();
 ```
 > For more details on the script, [click here](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/main/src/card).
 
-### 4. Adding Code to the Back Side
+4. ### Adding Code to the Back Side
 These codes are responsible for identifying and maintaining the order of the randomization previously done on the front side.
 The instructions for inserting the code on the back of the card vary depending on the specific configuration of your card:
 
