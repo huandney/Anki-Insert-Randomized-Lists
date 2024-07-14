@@ -107,7 +107,7 @@ For cards that use the FrontSide field on the back, you don't need to add the en
 
 ## Add-on Configuration
 
-Modify the add-on settings via **Tools → Add-ons → Insert Randomized Lists**, and then click **Config**. Available options:
+Modify the add-on settings via **Tools → Add-ons (or use `CTRL+SHIFT+A`) → Insert Randomized Lists**, and then click **Config**. Available options:
 
 - `hotkey_toggle_list`: The hotkey for inserting randomized lists. Default: `Alt+Shift+L`.
 - `enable_custom_style`: Enable custom styles for the editor fields. Default: `true`.
@@ -115,21 +115,19 @@ Modify the add-on settings via **Tools → Add-ons → Insert Randomized Lists**
 
 > Custom Styles is only for differentiating random lists from regular lists in the editor. This style will not appear when reviewing your cards.
 
-Example of custom style applied in the editor:
-
 ![Captura de tela de 2023-07-26 19-23-22](https://github.com/huandney/Anki-Insert-Randomized-Lists/assets/19948348/1facd2a6-a565-4124-bc45-eaf105a2124a)
 
 ## Compatibility
 
-The randomization [script](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/main/src/card/template.html) and the add-on have been tested across various Anki platforms and versions to ensure maximum compatibility. Here are the details:
+### Randomization Script
 
-- **AnkiWeb, AnkiDroid and AnkiMobile (tested on the latest versions)**: The randomization script works correctly on these platforms.
-    
-- **Anki Desktop (version 2.1.50 and later)**: The script works natively due to the implementation of `sessionStorage`.
-    
-- **Anki Desktop (version 2.1.49 and earlier)**: For these versions, it is necessary to use the [Cookie Monster](https://ankiweb.net/shared/info/1501583548) add-on to ensure the functionality of the randomization script.
-    
-- **Add-on Compatibility**: The add-on has been tested and confirmed to work correctly on all Anki versions, from 2.1.15 to 2.1.65 (and later).
+- **AnkiWeb, AnkiDroid, and AnkiMobile (latest versions):** The randomization script works correctly on these platforms.
+- **Anki Desktop (2.1.50+):** The script works natively due to the implementation of `sessionStorage`.
+- **Anki Desktop (2.1.49 and earlier):** Requires the [Cookie Monster](https://ankiweb.net/shared/info/1501583548) add-on for the randomization script to function properly.
+
+### Add-on
+
+- **Compatibility:** The add-on works on all Anki versions from 2.1.15 to 2.1.65+, with custom styles supported from 2.1.50+. For Anki 2.1.49 and below, custom styles can be applied using [Anki CSS Injector](https://ankiweb.net/shared/info/181103283).
 
 ## Troubleshooting
 
