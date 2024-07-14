@@ -121,13 +121,13 @@ Modify the add-on settings via **Tools → Add-ons (or use `CTRL+SHIFT+A`) → I
 
 ### Randomization Script
 
-- **AnkiWeb, AnkiDroid, and AnkiMobile (latest versions):** The randomization script works correctly on these platforms.
+- **AnkiWeb, AnkiDroid, AnkiMobile:** The randomization script works correctly on these platforms.
 - **Anki Desktop (2.1.50+):** The script works natively due to the implementation of `sessionStorage`.
 - **Anki Desktop (2.1.49 and earlier):** Requires the [Cookie Monster](https://ankiweb.net/shared/info/1501583548) add-on for the randomization script to function properly.
 
 ### Add-on
 
-- **Compatibility:** The add-on works on all Anki versions from 2.1.15 to 2.1.65+, with custom styles supported from 2.1.50+. For Anki 2.1.49 and below, custom styles can be applied using [Anki CSS Injector](https://ankiweb.net/shared/info/181103283).
+- **Compatibility:** The add-on Works froms 2.1.15+, with custom styles supported from 2.1.50+. For Anki 2.1.49 and below, custom styles can be applied using [Anki CSS Injector](https://ankiweb.net/shared/info/181103283).
 
 ## Troubleshooting
 
