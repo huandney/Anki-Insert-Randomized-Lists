@@ -131,7 +131,7 @@ For cards that use the FrontSide field on the back, you don't need to add the en
 
 ## Add-on Configuration
 
-Modify the add-on settings via **Tools → Add-ons (or use `CTRL+SHIFT+A`) → Insert Randomized Lists**, and then click **Config**. Available options:
+Modify the add-on settings via **Tools → Add-ons** (or use `CTRL+SHIFT+A`) **→ Insert Randomized Lists**, and then click **Config**. Available options:
 
 - `hotkey_toggle_list`: The hotkey for inserting randomized lists. Default: `Alt+Shift+L`.
 - `enable_custom_style`: Enable custom styles for the editor fields. Default: `true`.
