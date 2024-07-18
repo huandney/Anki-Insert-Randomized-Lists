@@ -1,5 +1,3 @@
-# config.py
-
 from aqt import mw
 
 addon_config = mw.addonManager.getConfig(__name__)
