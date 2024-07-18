@@ -22,14 +22,12 @@ addon_package = mw.addonManager.addonFromModule(__name__)
 mw.addonManager.setWebExports(__name__, r".*\.js")
 
 
-# Função para carregar pacotes JS necessários
 def load_packages(webcontent: WebContent, context: Any) -> None:
     if isinstance(context, Editor):
         base_path = f"/_addons/{addon_package}"
         webcontent.js.append(f"{base_path}/injector.js")
 
 
-# Função para injetar estilos personalizados no editor
 def inject(editor: Editor) -> None:
     note = editor.note
     attributes = {
@@ -45,6 +43,5 @@ def inject(editor: Editor) -> None:
     }}""")
 
 
-# Registrar ganchos
 editor_did_load_note.append(inject)
 webview_will_set_content.append(load_packages)
