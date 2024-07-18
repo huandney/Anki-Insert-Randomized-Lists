@@ -32,9 +32,9 @@ function reorder(elements, indices) {
     const reordered = indices.flatMap(index => grouped[index] || []);
 
     // Clear the content of the element and add the reordered elements
-    // We could use elements.replaceChildren(...reordered) here,
+    // We could use `elements.replaceChildren(...reordered);` here,
     // but for compatibility with older browser versions,
-    // we use the combination of elements.innerHTML = '' and elements.append(...reordered).
+    // we use the combination of `elements.innerHTML = '' and elements.append(...reordered);`
     elements.innerHTML = '';
     elements.append(...reordered);
 }
