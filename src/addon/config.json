@@ -1,5 +1,5 @@
 {
-    "enable_custom_style": true,
-    "custom_style": "border: 2px dotted gray;",
-    "hotkey_toggle_list": "Alt+Shift+L"
+  "enable_custom_style": true,
+  "custom_style": "border: 2px dotted gray;",
+  "hotkey_toggle_list": "Alt+Shift+L"
 }
