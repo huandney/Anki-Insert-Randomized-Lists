@@ -19,12 +19,8 @@ This repository contains two main components: an Anki add-on and a randomization
 3. ### Adding the Code to the Front Side
 Regardless of the card type, you'll need to add the following script, which is responsible for randomizing the lists:
 ```html
-<script data-name="Randomized Lists" data-version="v2.1.0">
+<script data-name="Randomized Lists" data-version="v2.2.0">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
-    
-function reorder(elements, indices) {
-    indices.forEach(index => elements.appendChild(elements.children[index]));
-}
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -32,6 +28,22 @@ function shuffle(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+}
+
+function reorder(elements, indices) {
+    const children = Array.from(elements.children);
+    const grouped = [];
+
+    for (let i = 0; i < children.length; i++) {
+        const group = [children[i]];
+        for (; i + 1 < children.length && children[i + 1].tagName.toLowerCase() === 'ul'; group.push(children[++i]));
+        grouped.push(group);
+    }
+
+    const reordered = indices.flatMap(index => grouped[index] || []);
+
+    elements.innerHTML = '';
+    elements.append(...reordered);
 }
 
 function run() {
@@ -61,12 +73,8 @@ The instructions for inserting the code on the back of the card vary depending o
 If your card does not have the `{{FrontSide}}` field, you should add the entire script with the addition of the `id="back"` to the metadata, as shown below:
   
 ```html
-<script data-name="Randomized Lists" data-version="v2.1.0" id="back">
+<script data-name="Randomized Lists" data-version="v2.2.0" id="back">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
-    
-function reorder(elements, indices) {
-    indices.forEach(index => elements.appendChild(elements.children[index]));
-}
 
 function shuffle(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -74,6 +82,22 @@ function shuffle(array) {
         [array[i], array[j]] = [array[j], array[i]];
     }
     return array;
+}
+
+function reorder(elements, indices) {
+    const children = Array.from(elements.children);
+    const grouped = [];
+
+    for (let i = 0; i < children.length; i++) {
+        const group = [children[i]];
+        for (; i + 1 < children.length && children[i + 1].tagName.toLowerCase() === 'ul'; group.push(children[++i]));
+        grouped.push(group);
+    }
+
+    const reordered = indices.flatMap(index => grouped[index] || []);
+
+    elements.innerHTML = '';
+    elements.append(...reordered);
 }
 
 function run() {
