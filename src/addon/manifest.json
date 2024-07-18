@@ -1,12 +1,12 @@
 {
-    "name": "Insert Randomized Lists",
-    "package": "Insert_Randomized_Lists",
-    "ankiweb_id": "",
-    "author": "huandney",
-    "version": "v1.0.0",
-    "homepage": "https://github.com/huandney/Anki-Insert-Randomized-Lists",
-    "conflicts": [],
-    "mod": 1690450592,
-    "min_point_version": 0,
-    "max_point_version": 0
+  "name": "Insert Randomized Lists",
+  "package": "Insert_Randomized_Lists",
+  "ankiweb_id": "",
+  "author": "huandney",
+  "version": "v1.1.0",
+  "homepage": "https://github.com/huandney/Anki-Insert-Randomized-Lists",
+  "conflicts": [],
+  "mod": 1720862449,
+  "min_point_version": 0,
+  "max_point_version": 0
 }
