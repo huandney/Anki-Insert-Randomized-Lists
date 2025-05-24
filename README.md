@@ -19,7 +19,7 @@ This repository contains two main components: an Anki add-on and a randomization
 3. ### Adding the Code to the Front Side
 Regardless of the card type, you'll need to add the following script, which is responsible for randomizing the lists:
 ```html
-<script data-name="Randomized Lists" data-version="v2.2.0">
+<script data-name="Randomized Lists" data-version="v2.3.0">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
 
 function shuffle(array) {
@@ -75,7 +75,7 @@ The instructions for inserting the code on the back of the card vary depending o
 If your card does not have the `{{FrontSide}}` field, you should add the entire script with the addition of the `id="back"` to the metadata, as shown below:
   
 ```html
-<script data-name="Randomized Lists" data-version="v2.2.0" id="back">
+<script data-name="Randomized Lists" data-version="v2.3.0" id="back">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
 
 function shuffle(array) {
