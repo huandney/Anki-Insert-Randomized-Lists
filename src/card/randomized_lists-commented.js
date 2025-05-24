@@ -1,5 +1,5 @@
 // Name: Randomized Lists
-// Version: v2.2.0
+// Version: v2.3.0
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
 
 // Function to shuffle an array and return the shuffled version
@@ -13,8 +13,8 @@ function shuffle(array) {
 
 // Reorders child elements based on provided indices
 function reorder(elements, indices) {
-    // Convert the collection of child elements into an array
-    const children = Array.from(elements.children);
+    // Convert the collection of child elements into an array using spread syntax
+    const children = [...elements.children];
     // Array to group the elements
     const grouped = [];
 
@@ -23,25 +23,29 @@ function reorder(elements, indices) {
         // Create a group with the current child element
         const group = [children[i]];
         // Group contiguous <ul> elements, adding them to the current group
-        for (; i + 1 < children.length && children[i + 1].tagName.toLowerCase() === 'ul'; group.push(children[++i]));
+        // Note: using exact case 'UL' for better performance compared to toLowerCase()
+        for (; i + 1 < children.length && children[i + 1].tagName === 'UL'; group.push(children[++i]));
         // Add the group to the array of groups
         grouped.push(group);
     }
 
-    // Reorder the groups according to the provided indices
-    const reordered = indices.flatMap(index => grouped[index] || []);
-
-    // Clear the content of the element and add the reordered elements
-    // We could use `elements.replaceChildren(...reordered);` here,
-    // but for compatibility with older browser versions,
-    // we use the combination of elements.innerHTML = '' and elements.append(...reordered).
-    elements.innerHTML = '';
-    elements.append(...reordered);
+    // Create a DocumentFragment for better performance when appending multiple elements
+    // This reduces DOM reflows and improves rendering efficiency
+    const fragment = document.createDocumentFragment();
+    // For each index, find the corresponding group and append its elements to the fragment
+    // Using optional chaining (?.) to safely handle undefined groups
+    indices.forEach(index => grouped[index]?.forEach(el => fragment.appendChild(el)));
+    // Replace all children of the element with the fragment in a single operation
+    // This is more efficient than clearing innerHTML and then appending
+    elements.replaceChildren(fragment);
 }
 
+// Main function to find and randomize lists
 function run() {
     // Select all list elements with the 'shuffle' class
     const uls = document.querySelectorAll('ul.shuffle');
+    // Early return if no shuffle lists are found, improving performance
+    if (!uls?.length) return; 
     
     // Attempt to retrieve indices previously stored in sessionStorage
     // If there's no data in sessionStorage, initialize an empty object
@@ -61,5 +65,6 @@ function run() {
     uls.forEach((ul, i) => reorder(ul, indices[i]));
 }
 
-// Execute the main function when the script is loaded
-run();
+// Workaround for reported DOM-loading timing issues in AnkiDroid
+document.addEventListener('DOMContentLoaded', run);
+if (document.readyState !== 'loading') run();
