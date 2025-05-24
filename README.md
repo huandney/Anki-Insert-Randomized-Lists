@@ -73,7 +73,7 @@ The instructions for inserting the code on the back of the card vary depending o
 If your card does not have the `{{FrontSide}}` field, you should add the entire script with the addition of the `id="back"` to the metadata, as shown below:
   
 ```html
-<script data-name="Randomized Lists" data-version="v2.2.0" id="back">
+<script data-name="Randomized Lists" data-version="v2.3.0" id="back">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
 
 function shuffle(array) {
@@ -85,34 +85,36 @@ function shuffle(array) {
 }
 
 function reorder(elements, indices) {
-    const children = Array.from(elements.children);
+    const children = [...elements.children];
     const grouped = [];
-
+    
     for (let i = 0; i < children.length; i++) {
         const group = [children[i]];
-        for (; i + 1 < children.length && children[i + 1].tagName.toLowerCase() === 'ul'; group.push(children[++i]));
+        for (; i + 1 < children.length && children[i + 1].tagName === 'UL'; group.push(children[++i]));
         grouped.push(group);
     }
-
-    const reordered = indices.flatMap(index => grouped[index] || []);
-
-    elements.innerHTML = '';
-    elements.append(...reordered);
+    
+    const fragment = document.createDocumentFragment();
+    indices.forEach(index => grouped[index] && grouped[index].forEach(el => fragment.appendChild(el)));
+    elements.replaceChildren(fragment);
 }
 
 function run() {
     const uls = document.querySelectorAll('ul.shuffle');
+    if (!uls || !uls.length) return;
+    
     let indices = JSON.parse(sessionStorage.getItem('allIndices')) || {};
-
+    
     if (!document.getElementById('back')) {
         uls.forEach((ul, i) => indices[i] = shuffle([...Array(ul.children.length).keys()]));
         sessionStorage.setItem('allIndices', JSON.stringify(indices));
     }
-
+    
     uls.forEach((ul, i) => reorder(ul, indices[i]));
 }
 
-run();
+document.addEventListener('DOMContentLoaded', run);
+if (document.readyState !== 'loading') run();
 </script>
 ```
 </details>
