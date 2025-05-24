@@ -30,11 +30,12 @@ function reorder(elements, indices) {
     }
 
     // Create a DocumentFragment for better performance when appending multiple elements
-    // This reduces DOM reflows and improves rendering efficiency
     const fragment = document.createDocumentFragment();
-    // For each index, find the corresponding group and append its elements to the fragment
-    // Using optional chaining (?.) to safely handle undefined groups
-    indices.forEach(index => grouped[index]?.forEach(el => fragment.appendChild(el)));
+    // We could use optional chaining (grouped[index]?.forEach(...)) here,
+    // but for maximum compatibility with older WebViews we use an explicit check:
+    indices.forEach(index =>
+      grouped[index] && grouped[index].forEach(el => fragment.appendChild(el))
+    );
     // Replace all children of the element with the fragment in a single operation
     // This is more efficient than clearing innerHTML and then appending
     elements.replaceChildren(fragment);
@@ -45,7 +46,7 @@ function run() {
     // Select all list elements with the 'shuffle' class
     const uls = document.querySelectorAll('ul.shuffle');
     // Early return if no shuffle lists are found, improving performance
-    if (!uls?.length) return; 
+    if (!uls || !uls.length) return; 
     
     // Attempt to retrieve indices previously stored in sessionStorage
     // If there's no data in sessionStorage, initialize an empty object
