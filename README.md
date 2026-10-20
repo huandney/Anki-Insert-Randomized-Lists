@@ -36,7 +36,7 @@ Paste the script below at the **end** of the front template, after all fields. I
         const lists = document.querySelectorAll("ul.shuffle:not([data-shuffled])");
         if (!lists.length) return;
 
-        // The back side is marked by id="back" on this script or on a <meta> placed before {{FrontSide}}
+        // The back side is marked by id="back" on this script or on a <meta> placed before FrontSide
         const isBack = Boolean(document.getElementById("back"));
         let saved = [];
         if (isBack) {
@@ -44,7 +44,7 @@ Paste the script below at the **end** of the front template, after all fields. I
         }
 
         const orders = [...lists].map((ul, i) => {
-            // A second copy of this script ({{FrontSide}} + back) must not permute the list again
+            // A second copy of this script (FrontSide + back) must not permute the list again
             ul.dataset.shuffled = "true";
             // Tab-indented sublists are sibling <ul>s and must move with the preceding item
             const groups = [];
@@ -96,7 +96,7 @@ Paste the script at the end of the back template. It is the same code as the fro
         const lists = document.querySelectorAll("ul.shuffle:not([data-shuffled])");
         if (!lists.length) return;
 
-        // The back side is marked by id="back" on this script or on a <meta> placed before {{FrontSide}}
+        // The back side is marked by id="back" on this script or on a <meta> placed before FrontSide
         const isBack = Boolean(document.getElementById("back"));
         let saved = [];
         if (isBack) {
@@ -104,7 +104,7 @@ Paste the script at the end of the back template. It is the same code as the fro
         }
 
         const orders = [...lists].map((ul, i) => {
-            // A second copy of this script ({{FrontSide}} + back) must not permute the list again
+            // A second copy of this script (FrontSide + back) must not permute the list again
             ul.dataset.shuffled = "true";
             // Tab-indented sublists are sibling <ul>s and must move with the preceding item
             const groups = [];

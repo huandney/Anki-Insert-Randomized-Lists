@@ -15,7 +15,7 @@
         const lists = document.querySelectorAll("ul.shuffle:not([data-shuffled])");
         if (!lists.length) return;
 
-        // The back side is marked by id="back" on this script or on a <meta> placed before {{FrontSide}}
+        // The back side is marked by id="back" on this script or on a <meta> placed before FrontSide
         const isBack = Boolean(document.getElementById("back"));
         let saved = [];
         if (isBack) {
@@ -23,7 +23,7 @@
         }
 
         const orders = [...lists].map((ul, i) => {
-            // A second copy of this script ({{FrontSide}} + back) must not permute the list again
+            // A second copy of this script (FrontSide + back) must not permute the list again
             ul.dataset.shuffled = "true";
             // Tab-indented sublists are sibling <ul>s and must move with the preceding item
             const groups = [];
