@@ -32,6 +32,19 @@ Paste the script below at the **end** of the front template, after all fields. I
         return array;
     }
 
+    // Reapplies the saved order when it fits the list, otherwise shuffles; returns the order used
+    function reorder(ul, saved) {
+        // Tab-indented sublists are sibling <ul>s and must move with the preceding item
+        const groups = [];
+        for (const el of ul.children) {
+            if (el.tagName === "UL" && groups.length) groups[groups.length - 1].push(el);
+            else groups.push([el]);
+        }
+        const order = saved?.length === groups.length ? saved : shuffle([...groups.keys()]);
+        ul.append(...order.flatMap(i => groups[i]));
+        return order;
+    }
+
     function run() {
         const lists = document.querySelectorAll("ul.shuffle:not([data-shuffled])");
         if (!lists.length) return;
@@ -46,16 +59,7 @@ Paste the script below at the **end** of the front template, after all fields. I
         const orders = [...lists].map((ul, i) => {
             // A second copy of this script (FrontSide + back) must not permute the list again
             ul.dataset.shuffled = "true";
-            // Tab-indented sublists are sibling <ul>s and must move with the preceding item
-            const groups = [];
-            for (const el of ul.children) {
-                if (el.tagName === "UL" && groups.length) groups[groups.length - 1].push(el);
-                else groups.push([el]);
-            }
-            // A missing or mismatched saved order (back opened without its front) falls back to a new shuffle
-            const order = saved[i]?.length === groups.length ? saved[i] : shuffle([...groups.keys()]);
-            ul.append(...order.flatMap(idx => groups[idx]));
-            return order;
+            return reorder(ul, saved[i]);
         });
 
         if (isBack) return;
@@ -92,6 +96,19 @@ Paste the script at the end of the back template. It is the same code as the fro
         return array;
     }
 
+    // Reapplies the saved order when it fits the list, otherwise shuffles; returns the order used
+    function reorder(ul, saved) {
+        // Tab-indented sublists are sibling <ul>s and must move with the preceding item
+        const groups = [];
+        for (const el of ul.children) {
+            if (el.tagName === "UL" && groups.length) groups[groups.length - 1].push(el);
+            else groups.push([el]);
+        }
+        const order = saved?.length === groups.length ? saved : shuffle([...groups.keys()]);
+        ul.append(...order.flatMap(i => groups[i]));
+        return order;
+    }
+
     function run() {
         const lists = document.querySelectorAll("ul.shuffle:not([data-shuffled])");
         if (!lists.length) return;
@@ -106,16 +123,7 @@ Paste the script at the end of the back template. It is the same code as the fro
         const orders = [...lists].map((ul, i) => {
             // A second copy of this script (FrontSide + back) must not permute the list again
             ul.dataset.shuffled = "true";
-            // Tab-indented sublists are sibling <ul>s and must move with the preceding item
-            const groups = [];
-            for (const el of ul.children) {
-                if (el.tagName === "UL" && groups.length) groups[groups.length - 1].push(el);
-                else groups.push([el]);
-            }
-            // A missing or mismatched saved order (back opened without its front) falls back to a new shuffle
-            const order = saved[i]?.length === groups.length ? saved[i] : shuffle([...groups.keys()]);
-            ul.append(...order.flatMap(idx => groups[idx]));
-            return order;
+            return reorder(ul, saved[i]);
         });
 
         if (isBack) return;
