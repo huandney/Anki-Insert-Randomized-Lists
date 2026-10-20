@@ -17,121 +17,88 @@ This repository contains two main components: an Anki add-on and a randomization
     - Proceed by clicking on **Cards** to invoke the card template editor.
 
 3. ### Adding the Code to the Front Side
-Regardless of the card type, you'll need to add the following script, which is responsible for randomizing the lists:
+Paste the script below at the **end** of the front template, after all fields. If the card has other scripts that read the lists (such as [Cloze Interactive](https://github.com/huandney/Anki-Cloze-Interactive)), keep this one **before** them so they see the shuffled order.
 ```html
-<script data-name="Randomized Lists" data-version="v2.3.0">
+<script data-name="Randomized Lists" data-version="v2.4.0">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
+(() => {
+    const KEY = "randomizedLists";
 
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
-    return array;
-}
 
-function reorder(elements, indices) {
-    const children = [...elements.children];
-    const grouped = [];
-    
-    for (let i = 0; i < children.length; i++) {
-        const group = [children[i]];
-        for (; i + 1 < children.length && children[i + 1].tagName === 'UL'; group.push(children[++i]));
-        grouped.push(group);
+    function run() {
+        const lists = document.querySelectorAll("ul.shuffle:not([data-shuffled])");
+        if (!lists.length) return;
+
+        // The back side is marked by id="back" on this script or on a <meta> placed before {{FrontSide}}
+        const isBack = Boolean(document.getElementById("back"));
+        let saved = [];
+        if (isBack) {
+            try { saved = JSON.parse(sessionStorage.getItem(KEY)) || []; } catch {}
+        }
+
+        const orders = [...lists].map((ul, i) => {
+            // A second copy of this script ({{FrontSide}} + back) must not permute the list again
+            ul.dataset.shuffled = "true";
+            // Tab-indented sublists are sibling <ul>s and must move with the preceding item
+            const groups = [];
+            for (const el of ul.children) {
+                if (el.tagName === "UL" && groups.length) groups[groups.length - 1].push(el);
+                else groups.push([el]);
+            }
+            // A missing or mismatched saved order (back opened without its front) falls back to a new shuffle
+            const order = saved[i]?.length === groups.length ? saved[i] : shuffle([...groups.keys()]);
+            ul.append(...order.flatMap(idx => groups[idx]));
+            return order;
+        });
+
+        if (isBack) return;
+        try { sessionStorage.setItem(KEY, JSON.stringify(orders)); } catch {}
     }
-    
-    const fragment = document.createDocumentFragment();
-    indices.forEach(index => grouped[index] && grouped[index].forEach(el => fragment.appendChild(el)));
-    elements.replaceChildren(fragment);
-}
 
-function run() {
-    const uls = document.querySelectorAll('ul.shuffle');
-    if (!uls || !uls.length) return;
-    
-    let indices = JSON.parse(sessionStorage.getItem('allIndices')) || {};
-    
-    if (!document.getElementById('back')) {
-        uls.forEach((ul, i) => indices[i] = shuffle([...Array(ul.children.length).keys()]));
-        sessionStorage.setItem('allIndices', JSON.stringify(indices));
-    }
-    
-    uls.forEach((ul, i) => reorder(ul, indices[i]));
-}
-
-document.addEventListener('DOMContentLoaded', run);
-if (document.readyState !== 'loading') run();
+    // Pasted above the content, AnkiDroid has not parsed the lists yet
+    if (document.querySelector("ul.shuffle") || document.readyState !== "loading") return run();
+    document.addEventListener("DOMContentLoaded", run, { once: true });
+})();
 </script>
 ```
-> For more details on the script, [click here](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/main/src/card).
+> The same code lives in [`src/card/template.html`](https://github.com/huandney/Anki-Insert-Randomized-Lists/blob/main/src/card/template.html).
 
 4. ### Adding Code to the Back Side
-These codes are responsible for identifying and maintaining the order of the randomization previously done on the front side.
-The instructions for inserting the code on the back of the card vary depending on the specific configuration of your card:
+The back side must be marked with `id="back"` so the script restores the order shuffled on the front instead of shuffling again.
 
 <details>
   <summary><strong>Cards without the FrontSide Field on the Back</strong></summary>
-    
-If your card does not have the `{{FrontSide}}` field, you should add the entire script with the addition of the `id="back"` to the metadata, as shown below:
-  
+
+Paste the same script at the end of the back template, adding `id="back"` to the opening tag:
+
 ```html
-<script data-name="Randomized Lists" data-version="v2.3.0" id="back">
-// https://github.com/huandney/Anki-Insert-Randomized-Lists
-
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
-    }
-    return array;
-}
-
-function reorder(elements, indices) {
-    const children = [...elements.children];
-    const grouped = [];
-    
-    for (let i = 0; i < children.length; i++) {
-        const group = [children[i]];
-        for (; i + 1 < children.length && children[i + 1].tagName === 'UL'; group.push(children[++i]));
-        grouped.push(group);
-    }
-    
-    const fragment = document.createDocumentFragment();
-    indices.forEach(index => grouped[index] && grouped[index].forEach(el => fragment.appendChild(el)));
-    elements.replaceChildren(fragment);
-}
-
-function run() {
-    const uls = document.querySelectorAll('ul.shuffle');
-    if (!uls || !uls.length) return;
-    
-    let indices = JSON.parse(sessionStorage.getItem('allIndices')) || {};
-    
-    if (!document.getElementById('back')) {
-        uls.forEach((ul, i) => indices[i] = shuffle([...Array(ul.children.length).keys()]));
-        sessionStorage.setItem('allIndices', JSON.stringify(indices));
-    }
-    
-    uls.forEach((ul, i) => reorder(ul, indices[i]));
-}
-
-document.addEventListener('DOMContentLoaded', run);
-if (document.readyState !== 'loading') run();
-</script>
+<script data-name="Randomized Lists" data-version="v2.4.0" id="back">
 ```
 </details>
 
 <details>
   <summary><strong>Cards with FrontSide Field on the Back</strong></summary>
-    
-For cards that use the FrontSide field on the back, you don't need to add the entire script again. Simply insert the following metatag before the `{{FrontSide}}` field:
-    
+
+The script comes along with `{{FrontSide}}`, so you don't need to paste it again. Simply insert the following metatag before the `{{FrontSide}}` field:
+
 ```html
 <meta id="back">
 ```
-> - This metatag ensures that the script correctly recognizes the back of the card and maintains the randomization order previously set on the front.
-> - Placing this metatag before the `{{FrontSide}}` field is crucial for proper functioning on AnkiDroid.
+> Placing this metatag **before** the `{{FrontSide}}` field is crucial for proper functioning on AnkiDroid.
 </details>
+
+5. ### How It Works
+    - On the front, each `ul.shuffle` list is shuffled and the order is saved in `sessionStorage` under the `randomizedLists` key.
+    - On the back (`id="back"` present), the saved order is reapplied. If it is missing or does not match the list (e.g. previewing the back directly), the list is shuffled again instead of breaking.
+    - Sublists created by indenting with Tab move together with the item above them.
+    - Lists are marked as shuffled, so a second copy of the script on the same side does nothing.
 
 ## Add-on Configuration
 
@@ -162,7 +129,7 @@ Modify the add-on settings via **Tools â†’ Add-ons** (or use `CTRL+SHIFT+A`) **â
 
 If you are having problems with the add-on, please check the following:
 
-* Make sure that the JavaScript code is [correctly inserted](#adding-the-code-to-the-front-side) into the card template.
+* Make sure that the JavaScript code is [correctly inserted](#adding-the-code-to-the-front-side) at the end of the card template.
 * For cards without the FrontSide field on the back, make sure the script includes `id="back"`. For cards that use the FrontSide field, the `<meta id="back">` tag must be present and should be placed **before** the `{{FrontSide}}` field for proper functioning on AnkiDroid. [Details here](#4-adding-code-to-the-back-side).
 * See the compatibility section above.
 
