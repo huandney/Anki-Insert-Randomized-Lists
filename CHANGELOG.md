@@ -1,12 +1,12 @@
 # Changelog
 
 All notable changes to this project are documented in this file.
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Releases are tagged by date (`repository-YYYY-MM-DD`); the add-on and the randomization script are versioned separately, following [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [2.4.0] - 2026-10-19
-> Commits: `3ad65c8`
+## [repository-2026-10-20] - 2026-10-20
+> Commits: `3ad65c8`, `a3a3c3b`, `ebe23b4`, `5edfa14`, `9346965`, `2ade00b`
 
-### Randomization Script
+### Randomization Script (v2.4.0)
 - **Changed**: Wrapped in an IIFE; `shuffle`, `reorder` and `run` no longer leak as globals and collide with other template scripts on Anki Desktop.
 - **Changed**: The order is saved under its own `sessionStorage` key (`randomizedLists`) instead of the shared `allIndices` key.
 - **Changed**: Runs immediately when the lists are already on the page, so later card scripts (e.g. Cloze Interactive) see the shuffled order; it waits for the page to load only when pasted above the content.
