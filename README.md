@@ -51,10 +51,7 @@ Paste the script below at the **end** of the front template, after all fields. I
 
         // The back side is marked by id="back" on this script or on a <meta> placed before FrontSide
         const isBack = Boolean(document.getElementById("back"));
-        let saved = [];
-        if (isBack) {
-            try { saved = JSON.parse(sessionStorage.getItem(KEY)) || []; } catch {}
-        }
+        const saved = isBack ? JSON.parse(sessionStorage.getItem(KEY)) || [] : [];
 
         const orders = [...lists].map((ul, i) => {
             // A second copy of this script (FrontSide + back) must not permute the list again
@@ -63,7 +60,7 @@ Paste the script below at the **end** of the front template, after all fields. I
         });
 
         if (isBack) return;
-        try { sessionStorage.setItem(KEY, JSON.stringify(orders)); } catch {}
+        sessionStorage.setItem(KEY, JSON.stringify(orders));
     }
 
     // Pasted above the content, AnkiDroid has not parsed the lists yet
@@ -115,10 +112,7 @@ Paste the script at the end of the back template. It is the same code as the fro
 
         // The back side is marked by id="back" on this script or on a <meta> placed before FrontSide
         const isBack = Boolean(document.getElementById("back"));
-        let saved = [];
-        if (isBack) {
-            try { saved = JSON.parse(sessionStorage.getItem(KEY)) || []; } catch {}
-        }
+        const saved = isBack ? JSON.parse(sessionStorage.getItem(KEY)) || [] : [];
 
         const orders = [...lists].map((ul, i) => {
             // A second copy of this script (FrontSide + back) must not permute the list again
@@ -127,7 +121,7 @@ Paste the script at the end of the back template. It is the same code as the fro
         });
 
         if (isBack) return;
-        try { sessionStorage.setItem(KEY, JSON.stringify(orders)); } catch {}
+        sessionStorage.setItem(KEY, JSON.stringify(orders));
     }
 
     // Pasted above the content, AnkiDroid has not parsed the lists yet
