@@ -76,10 +76,57 @@ The back side must be marked with `id="back"` so the script restores the order s
 <details>
   <summary><strong>Cards without the FrontSide Field on the Back</strong></summary>
 
-Paste the same script at the end of the back template, adding `id="back"` to the opening tag:
+Paste the script at the end of the back template. It is the same code as the front, with `id="back"` added to the opening tag:
 
 ```html
 <script data-name="Randomized Lists" data-version="v2.4.0" id="back">
+// https://github.com/huandney/Anki-Insert-Randomized-Lists
+(() => {
+    const KEY = "randomizedLists";
+
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+    function run() {
+        const lists = document.querySelectorAll("ul.shuffle:not([data-shuffled])");
+        if (!lists.length) return;
+
+        // The back side is marked by id="back" on this script or on a <meta> placed before {{FrontSide}}
+        const isBack = Boolean(document.getElementById("back"));
+        let saved = [];
+        if (isBack) {
+            try { saved = JSON.parse(sessionStorage.getItem(KEY)) || []; } catch {}
+        }
+
+        const orders = [...lists].map((ul, i) => {
+            // A second copy of this script ({{FrontSide}} + back) must not permute the list again
+            ul.dataset.shuffled = "true";
+            // Tab-indented sublists are sibling <ul>s and must move with the preceding item
+            const groups = [];
+            for (const el of ul.children) {
+                if (el.tagName === "UL" && groups.length) groups[groups.length - 1].push(el);
+                else groups.push([el]);
+            }
+            // A missing or mismatched saved order (back opened without its front) falls back to a new shuffle
+            const order = saved[i]?.length === groups.length ? saved[i] : shuffle([...groups.keys()]);
+            ul.append(...order.flatMap(idx => groups[idx]));
+            return order;
+        });
+
+        if (isBack) return;
+        try { sessionStorage.setItem(KEY, JSON.stringify(orders)); } catch {}
+    }
+
+    // Pasted above the content, AnkiDroid has not parsed the lists yet
+    if (document.querySelector("ul.shuffle") || document.readyState !== "loading") return run();
+    document.addEventListener("DOMContentLoaded", run, { once: true });
+})();
+</script>
 ```
 </details>
 
