@@ -184,6 +184,7 @@ If you are having problems with the add-on, please check the following:
 * Make sure that the JavaScript code is [correctly inserted](#adding-the-code-to-the-front-side) at the end of the card template.
 * For cards without the FrontSide field on the back, make sure the script includes `id="back"`. For cards that use the FrontSide field, the `<meta id="back">` tag must be present and should be placed **before** the `{{FrontSide}}` field for proper functioning on AnkiDroid. [Details here](#4-adding-code-to-the-back-side).
 * See the compatibility section above.
+* On some Linux setups, undoing (Ctrl+Z) right after creating a list with the `Alt+Shift+L` shortcut may leave the list behind. Clicking RL works normally; if this affects you, set `hotkey_toggle_list` to a combination without Alt, such as `Ctrl+Shift+Y`.
 
 If you are still encountering issues, or have any suggestions, do not hesitate to open a [new issue](https://github.com/huandney/Anki-Insert-Randomized-Lists/issues) or PR here. Describe what you are facing in detail, including the Anki version and any error messages you may be receiving.
 
