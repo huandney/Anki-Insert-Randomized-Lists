@@ -189,7 +189,7 @@ If you are still encountering issues, or have any suggestions, do not hesitate t
 
 ## License
 
-This project is licensed under the GNU General Public License v3.0.
+This project is licensed under the GNU Affero General Public License v3.0, the license of the original add-on it is based on.
 
 ## Acknowledgements
 

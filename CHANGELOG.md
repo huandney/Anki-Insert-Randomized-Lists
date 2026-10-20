@@ -21,3 +21,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - **Fixed**: Creating a list no longer loses formatting, images, or the text after a `<` in the selection (clozes included).
 - **Changed**: Requires Anki 2.1.50 or later; the version check and the `anki.version` import were removed.
 - **Changed**: The editor style injector was rewritten to add only the `ul.shuffle` style; `custom_style` is passed as JSON, so CSS containing backticks no longer breaks the editor script.
+
+### Project
+- **Changed**: Licensed under the GNU AGPLv3, matching the original add-on by Glutanimate.
