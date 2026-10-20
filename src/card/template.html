@@ -1,43 +1,49 @@
-<script data-name="Randomized Lists" data-version="v2.3.0">
+<script data-name="Randomized Lists" data-version="v2.4.0">
 // https://github.com/huandney/Anki-Insert-Randomized-Lists
+(() => {
+    const KEY = "randomizedLists";
 
-function shuffle(array) {
-    for (let i = array.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+    function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
     }
-    return array;
-}
 
-function reorder(elements, indices) {
-    const children = [...elements.children];
-    const grouped = [];
-    
-    for (let i = 0; i < children.length; i++) {
-        const group = [children[i]];
-        for (; i + 1 < children.length && children[i + 1].tagName === 'UL'; group.push(children[++i]));
-        grouped.push(group);
+    // Reapplies the saved order when it fits the list, otherwise shuffles; returns the order used
+    function reorder(ul, saved) {
+        // Tab-indented sublists are sibling <ul>s and must move with the preceding item
+        const groups = [];
+        for (const el of ul.children) {
+            if (el.tagName === "UL" && groups.length) groups[groups.length - 1].push(el);
+            else groups.push([el]);
+        }
+        const order = saved?.length === groups.length ? saved : shuffle([...groups.keys()]);
+        ul.append(...order.flatMap(i => groups[i]));
+        return order;
     }
-    
-    const fragment = document.createDocumentFragment();
-    indices.forEach(index => grouped[index] && grouped[index].forEach(el => fragment.appendChild(el)));
-    elements.replaceChildren(fragment);
-}
 
-function run() {
-    const uls = document.querySelectorAll('ul.shuffle');
-    if (!uls || !uls.length) return;
-    
-    let indices = JSON.parse(sessionStorage.getItem('allIndices')) || {};
-    
-    if (!document.getElementById('back')) {
-        uls.forEach((ul, i) => indices[i] = shuffle([...Array(ul.children.length).keys()]));
-        sessionStorage.setItem('allIndices', JSON.stringify(indices));
+    function run() {
+        const lists = document.querySelectorAll("ul.shuffle:not([data-shuffled])");
+        if (!lists.length) return;
+
+        // The back side is marked by id="back" on this script or on a <meta> placed before FrontSide
+        const isBack = Boolean(document.getElementById("back"));
+        const saved = isBack ? JSON.parse(sessionStorage.getItem(KEY)) || [] : [];
+
+        const orders = [...lists].map((ul, i) => {
+            // A second copy of this script (FrontSide + back) must not permute the list again
+            ul.dataset.shuffled = "true";
+            return reorder(ul, saved[i]);
+        });
+
+        if (isBack) return;
+        sessionStorage.setItem(KEY, JSON.stringify(orders));
     }
-    
-    uls.forEach((ul, i) => reorder(ul, indices[i]));
-}
 
-document.addEventListener('DOMContentLoaded', run);
-if (document.readyState !== 'loading') run();
+    // Pasted above the content, AnkiDroid has not parsed the lists yet
+    if (document.querySelector("ul.shuffle") || document.readyState !== "loading") return run();
+    document.addEventListener("DOMContentLoaded", run, { once: true });
+})();
 </script>
