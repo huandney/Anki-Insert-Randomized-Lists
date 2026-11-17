@@ -3,7 +3,8 @@
 All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Releases are tagged by date (`repository-YYYY-MM-DD`); the add-on and the randomization script are versioned separately, following [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [repository-2026-11-17] - 2026-11-17
+> Commits: `fd21014`
 
 ### Add-on (v2.0.1)
 - **Fixed**: Randomized lists are highlighted with `custom_style` in Anki's new editor (Preferences > Experiments) too; the style script was never loaded there, so toggling a list showed no change.
