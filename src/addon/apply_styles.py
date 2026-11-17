@@ -9,26 +9,20 @@ License: GNU AGPLv3 or later, https://www.gnu.org/licenses/agpl.html
 """
 
 import json
-from typing import Any
+from pathlib import Path
 
-from aqt import gui_hooks, mw
+from aqt import gui_hooks
 from aqt.editor import Editor
-from aqt.webview import WebContent
 
 from .config import custom_style
 
-addon_package = mw.addonManager.addonFromModule(__name__)
-mw.addonManager.setWebExports(__name__, r".*\.js")
-
-
-def load_injector(web_content: WebContent, context: Any) -> None:
-    if isinstance(context, Editor):
-        web_content.js.append(f"/_addons/{addon_package}/injector.js")
+# Evaluated instead of loaded as a page script: the new editor is a SvelteKit page,
+# which never goes through webview_will_set_content
+INJECTOR = (Path(__file__).parent / "injector.js").read_text(encoding="utf-8")
 
 
 def style_fields(editor: Editor) -> None:
-    editor.web.eval(f"globalThis.RandomizedLists?.styleFields({json.dumps(custom_style)});")
+    editor.web.eval(f"{INJECTOR}\nglobalThis.RandomizedLists.styleFields({json.dumps(custom_style)});")
 
 
-gui_hooks.webview_will_set_content.append(load_injector)
 gui_hooks.editor_did_load_note.append(style_fields)
