@@ -175,7 +175,7 @@ Modify the add-on settings via **Tools â†’ Add-ons** (or use `CTRL+SHIFT+A`) **â
 
 ### Add-on
 
-- **Compatibility:** The add-on requires Anki 2.1.50 or later. Older Anki versions keep receiving the previous release from AnkiWeb.
+- **Compatibility:** The add-on requires Anki 2.1.54 or later. Older Anki versions keep receiving the previous release from AnkiWeb.
 
 ## Troubleshooting
 

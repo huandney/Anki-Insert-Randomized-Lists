@@ -4,10 +4,13 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/). Releases are tagged by date (`repository-YYYY-MM-DD`); the add-on and the randomization script are versioned separately, following [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [repository-2026-11-17] - 2026-11-17
-> Commits: `fd21014`
+> Commits: `fd21014`, `ad23ebd`
 
 ### Add-on (v2.0.1)
 - **Fixed**: Randomized lists are highlighted with `custom_style` in Anki's new editor (Preferences > Experiments) too; the style script was never loaded there, so toggling a list showed no change.
+- **Fixed**: Fields set to "Use HTML editor by default" highlight their randomized lists; the style went to the HTML editor instead of the field.
+- **Changed**: Each field is styled as it appears (another note, another note type) instead of the editor waiting for its field list on every note load.
+- **Changed**: Requires Anki 2.1.54 or later.
 
 ## [repository-2026-10-20] - 2026-10-20
 > Commits: `3ad65c8`, `a3a3c3b`, `ebe23b4`, `5edfa14`, `9346965`, `2ade00b`

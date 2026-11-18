@@ -22,7 +22,8 @@ INJECTOR = (Path(__file__).parent / "injector.js").read_text(encoding="utf-8")
 
 
 def style_fields(editor: Editor) -> None:
-    editor.web.eval(f"{INJECTOR}\nglobalThis.RandomizedLists.styleFields({json.dumps(custom_style)});")
+    # Once per editor page: the injector styles each field as it mounts
+    editor.web.eval(f"({INJECTOR})({json.dumps(custom_style)});")
 
 
-gui_hooks.editor_did_load_note.append(style_fields)
+gui_hooks.editor_did_init.append(style_fields)
