@@ -5,6 +5,8 @@ This repository contains two main components: an Anki add-on and a randomization
 1. **[Add-on](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/main/src/addon)**: Is an extension for Anki that toggles the "shuffle" class on lists in the editor. These lists can then be randomized using the randomization script.
 2. **[Randomization script](https://github.com/huandney/Anki-Insert-Randomized-Lists/tree/main/src/card)**: A JavaScript script that can be inserted into the front and back of an Anki card to randomize lists that have the "shuffle" class.
 
+![Selecting lines and clicking RL turns them into a randomized list; each review of the card shows the items in a new order](docs/demo.gif)
+
 ## Setup and Integration
 
 1. ### Installation
